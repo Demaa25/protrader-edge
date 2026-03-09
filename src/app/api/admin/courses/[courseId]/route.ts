@@ -18,6 +18,8 @@ export async function PATCH(
   const session = await requireAdmin();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  const { courseId } = await ctx.params;
+
   const body = (await req.json().catch(() => null)) as null | {
     title?: string;
     category?: string;
@@ -28,7 +30,7 @@ export async function PATCH(
   if (typeof body?.category === "string") data.category = body.category.trim();
 
   const updated = await prisma.course.update({
-    where: { id: params.courseId },
+    where: { id: courseId },
     data,
     select: { id: true, title: true, category: true },
   });
