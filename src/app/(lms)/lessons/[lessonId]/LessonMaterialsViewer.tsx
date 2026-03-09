@@ -22,7 +22,7 @@ type TocItem = {
 type PdfJs = any;
 
 async function loadPdfJs(): Promise<PdfJs> {
-  const pdfjs = await import("pdfjs-dist/build/pdf");
+  const pdfjs = await import("pdfjs-dist");
 
   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.mjs",
