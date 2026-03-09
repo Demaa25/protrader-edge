@@ -1,5 +1,5 @@
 // src/app/(lms)/catalog/page.tsx
-
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
