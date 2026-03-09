@@ -9,22 +9,21 @@ export type LessonMaterialDTO = {
   id: string;
   type: MaterialType;
   title: string;
-  url: string; // must be fetchable in browser (e.g. /uploads/file.pdf)
+  url: string;
   order: number;
 };
 
 type TocItem = {
   title: string;
-  page: number; // 1-based
+  page: number;
   items?: TocItem[];
 };
 
-type PdfJs = typeof import("pdfjs-dist/build/pdf");
+type PdfJs = any;
 
 async function loadPdfJs(): Promise<PdfJs> {
   const pdfjs = await import("pdfjs-dist/build/pdf");
 
-  // ✅ bundle worker via Next (no CDN, no fake worker)
   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.mjs",
     import.meta.url
@@ -35,7 +34,10 @@ async function loadPdfJs(): Promise<PdfJs> {
 
 function isPdf(url: string) {
   try {
-    const u = new URL(url, typeof window !== "undefined" ? window.location.origin : "http://localhost");
+    const u = new URL(
+      url,
+      typeof window !== "undefined" ? window.location.origin : "http://localhost"
+    );
     return u.pathname.toLowerCase().endsWith(".pdf");
   } catch {
     return url.toLowerCase().includes(".pdf");
@@ -46,25 +48,29 @@ function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
 
-export default function LessonMaterialsViewer(props: { documents: LessonMaterialDTO[] }) {
+export default function LessonMaterialsViewer(props: {
+  documents: LessonMaterialDTO[];
+}) {
   const docs = props.documents ?? [];
   const [activeId, setActiveId] = useState(docs[0]?.id ?? "");
-  const active = useMemo(() => docs.find((d) => d.id === activeId) ?? docs[0], [docs, activeId]);
+  const active = useMemo(
+    () => docs.find((d) => d.id === activeId) ?? docs[0],
+    [docs, activeId]
+  );
 
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
   const [pageCount, setPageCount] = useState(0);
-  const [page, setPage] = useState(1); // ✅ FIX: define page state
+  const [page, setPage] = useState(1);
   const [toc, setToc] = useState<TocItem[]>([]);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const pdfRef = useRef<any>(null); // PDFDocumentProxy
-  const renderTaskRef = useRef<any>(null); // RenderTask
-  const renderSeqRef = useRef(0); // monotonic render sequence
+  const pdfRef = useRef<any>(null);
+  const renderTaskRef = useRef<any>(null);
+  const renderSeqRef = useRef(0);
 
-  // reset when switching docs
   useEffect(() => {
     setErr("");
     setToc([]);
@@ -72,7 +78,6 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
     setPage(1);
     pdfRef.current = null;
 
-    // cancel any render in progress
     if (renderTaskRef.current) {
       try {
         renderTaskRef.current.cancel();
@@ -81,7 +86,6 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
     }
   }, [active?.id]);
 
-  // load pdf (and outline if present)
   useEffect(() => {
     let cancelled = false;
 
@@ -100,7 +104,11 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
         const pdfjs = await loadPdfJs();
         if (cancelled) return;
 
-        const task = pdfjs.getDocument({ url: active.url, withCredentials: false });
+        const task = pdfjs.getDocument({
+          url: active.url,
+          withCredentials: false,
+        });
+
         const pdf = await task.promise;
         if (cancelled) return;
 
@@ -108,36 +116,34 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
         setPageCount(pdf.numPages);
         setPage(1);
 
-        // TOC from PDF outline (only if it exists)
         const outline = await pdf.getOutline().catch(() => null);
         if (!cancelled && outline) {
           const built = await buildToc(pdf, outline);
           if (!cancelled) setToc(built);
         }
 
-        // render first page
         await renderPage(pdf, 1);
       } catch (e: any) {
-        if (!cancelled) setErr(e?.message || "Failed to load PDF.");
+        if (!cancelled) {
+          setErr(e?.message || "Failed to load PDF.");
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
     }
 
     run();
+
     return () => {
       cancelled = true;
     };
   }, [active?.url]);
 
-  // render when page changes
   useEffect(() => {
     if (!pdfRef.current) return;
     renderPage(pdfRef.current, page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
-  // re-render on resize to keep it fit
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -148,7 +154,6 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
 
     ro.observe(containerRef.current);
     return () => ro.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   if (!docs.length) return null;
@@ -163,26 +168,21 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // ✅ This sequence id prevents stale renders from “winning”
     const mySeq = ++renderSeqRef.current;
 
-    // ✅ Cancel previous render on this SAME canvas, then await its end
     if (renderTaskRef.current) {
       try {
         renderTaskRef.current.cancel();
       } catch {}
       try {
         await renderTaskRef.current.promise;
-      } catch {
-        // ignore cancellation errors
-      }
+      } catch {}
       renderTaskRef.current = null;
     }
 
     try {
       const pageObj = await pdf.getPage(pageNumber);
 
-      // Fit to container width
       const containerWidth = containerRef.current?.clientWidth ?? 900;
       const usableWidth = Math.max(360, containerWidth - 80);
 
@@ -190,26 +190,25 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
       const scale = usableWidth / vp1.width;
       const viewport = pageObj.getViewport({ scale });
 
-      // if a newer render started while awaiting, stop
       if (renderSeqRef.current !== mySeq) return;
 
       canvas.width = Math.floor(viewport.width);
       canvas.height = Math.floor(viewport.height);
 
-      // clear canvas before drawing
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const renderTask = pageObj.render({ canvasContext: ctx, viewport });
-      renderTaskRef.current = renderTask;
+      const renderTask = pageObj.render({
+        canvasContext: ctx,
+        viewport,
+      });
 
+      renderTaskRef.current = renderTask;
       await renderTask.promise;
 
-      // only clear ref if still current
       if (renderSeqRef.current === mySeq) {
         renderTaskRef.current = null;
       }
     } catch (e: any) {
-      // ignore cancellation
       const msg = String(e?.message || "");
       if (!msg.toLowerCase().includes("cancel")) {
         console.error(e);
@@ -223,7 +222,6 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
     <div style={{ marginTop: 14 }}>
       <div style={{ fontWeight: 900, marginBottom: 8 }}>Lesson Documents</div>
 
-      {/* Tabs */}
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
         {docs.map((d) => {
           const on = d.id === active?.id;
@@ -248,7 +246,6 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
         })}
       </div>
 
-      {/* Viewer Frame */}
       <div
         style={{
           border: "1px solid rgba(16,24,40,0.12)",
@@ -257,7 +254,6 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
           background: "#0b1220",
         }}
       >
-        {/* Toolbar */}
         <div
           style={{
             display: "flex",
@@ -295,12 +291,12 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
 
           <div style={{ flex: 1 }} />
 
-          {loading ? <div style={{ color: "#cbd5e1", fontWeight: 800 }}>Loading…</div> : null}
+          {loading ? (
+            <div style={{ color: "#cbd5e1", fontWeight: 800 }}>Loading…</div>
+          ) : null}
         </div>
 
-        {/* Body: TOC + Page */}
         <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", minHeight: 560 }}>
-          {/* TOC */}
           <div
             style={{
               borderRight: "1px solid rgba(255,255,255,0.08)",
@@ -313,17 +309,22 @@ export default function LessonMaterialsViewer(props: { documents: LessonMaterial
             <div style={{ fontWeight: 900, marginBottom: 8 }}>Contents</div>
 
             {err ? (
-              <div style={{ color: "#fca5a5", fontWeight: 800, lineHeight: 1.4 }}>{err}</div>
+              <div style={{ color: "#fca5a5", fontWeight: 800, lineHeight: 1.4 }}>
+                {err}
+              </div>
             ) : toc.length === 0 ? (
               <div style={{ color: "#cbd5e1", fontWeight: 700, lineHeight: 1.4 }}>
                 {loading ? "Reading table of contents…" : "No table of contents found in this PDF."}
               </div>
             ) : (
-              <TocList toc={toc} currentPage={page} onJump={(p) => setPage(clamp(p, 1, pageCount || 1))} />
+              <TocList
+                toc={toc}
+                currentPage={page}
+                onJump={(p) => setPage(clamp(p, 1, pageCount || 1))}
+              />
             )}
           </div>
 
-          {/* Page */}
           <div
             ref={containerRef}
             style={{
@@ -364,12 +365,13 @@ function btnStyle(disabled: boolean) {
   } as const;
 }
 
-// Build TOC from PDF outline (if it exists)
 async function buildToc(pdf: any, outline: any[]): Promise<TocItem[]> {
   async function resolveItem(item: any): Promise<TocItem> {
     const title = String(item.title ?? "").trim() || "Untitled";
     const page = await resolveDestToPage(pdf, item.dest).catch(() => 1);
-    const kids = Array.isArray(item.items) ? await Promise.all(item.items.map(resolveItem)) : undefined;
+    const kids = Array.isArray(item.items)
+      ? await Promise.all(item.items.map(resolveItem))
+      : undefined;
 
     return {
       title,
@@ -387,21 +389,36 @@ async function resolveDestToPage(pdf: any, dest: any): Promise<number> {
   const d = typeof dest === "string" ? await pdf.getDestination(dest) : dest;
   if (!Array.isArray(d) || !d[0]) return 1;
 
-  const pageIndex = await pdf.getPageIndex(d[0]); // 0-based
+  const pageIndex = await pdf.getPageIndex(d[0]);
   return pageIndex + 1;
 }
 
-function TocList(props: { toc: TocItem[]; currentPage: number; onJump: (page: number) => void }) {
+function TocList(props: {
+  toc: TocItem[];
+  currentPage: number;
+  onJump: (page: number) => void;
+}) {
   return (
     <div style={{ display: "grid", gap: 6 }}>
       {props.toc.map((t, i) => (
-        <TocNode key={`${t.title}-${i}`} node={t} depth={0} currentPage={props.currentPage} onJump={props.onJump} />
+        <TocNode
+          key={`${t.title}-${i}`}
+          node={t}
+          depth={0}
+          currentPage={props.currentPage}
+          onJump={props.onJump}
+        />
       ))}
     </div>
   );
 }
 
-function TocNode(props: { node: TocItem; depth: number; currentPage: number; onJump: (page: number) => void }) {
+function TocNode(props: {
+  node: TocItem;
+  depth: number;
+  currentPage: number;
+  onJump: (page: number) => void;
+}) {
   const { node, depth, currentPage, onJump } = props;
   const active = node.page === currentPage;
 
@@ -424,7 +441,9 @@ function TocNode(props: { node: TocItem; depth: number; currentPage: number; onJ
         }}
       >
         {node.title}
-        <span style={{ opacity: 0.7, fontWeight: 800, marginLeft: 8 }}>· {node.page}</span>
+        <span style={{ opacity: 0.7, fontWeight: 800, marginLeft: 8 }}>
+          · {node.page}
+        </span>
       </button>
 
       {node.items?.length ? (
