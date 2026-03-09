@@ -1,0 +1,24 @@
+/* src/app/admin/users/admin-users.module.css */
+.shell { display: flex; }
+.main { flex: 1; padding: 24px 28px; }
+.h1 { margin: 0 0 18px; font-size: 34px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(16,24,40,0.06); margin-bottom: 16px; max-width: 980px; }
+.cardTitle { font-weight: 900; margin-bottom: 10px; }
+.form { display: grid; gap: 10px; max-width: 520px; }
+.label { font-size: 13px; font-weight: 900; color: var(--muted); }
+.input { padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
+.primary { justify-self: start; background: var(--primary); border: none; color: #fff; font-weight: 900; padding: 10px 14px; border-radius: 12px; cursor: pointer; }
+.toolbar { display: flex; gap: 10px; margin-bottom: 10px; }
+.search { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
+.filter { width: 220px; padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
+.tableHead { display: grid; grid-template-columns: 1.4fr 1.4fr 0.8fr 0.6fr; font-weight: 900; color: var(--muted); padding: 10px 8px; border-bottom: 1px solid var(--border); }
+.row { display: grid; grid-template-columns: 1.4fr 1.4fr 0.8fr 0.6fr; padding: 12px 8px; border-bottom: 1px solid rgba(16,24,40,0.06); align-items: center; }
+.user { font-weight: 900; color: #1f5eff; }
+.actions { display: flex; gap: 8px; justify-content: flex-end; }
+.iconBtn { border: 1px solid var(--border); background: transparent; padding: 8px 10px; border-radius: 10px; cursor: pointer; }
+.danger { border: 1px solid rgba(255,64,64,0.35); background: rgba(255,64,64,0.10); color: #c12a2a; padding: 8px 10px; border-radius: 10px; cursor: pointer; }
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

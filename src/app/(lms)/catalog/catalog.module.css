@@ -1,0 +1,61 @@
+/* src/app/(lms)/catalog/catalog.module.css */
+.shell { display: flex; }
+.main { flex: 1; padding: 24px 28px; }
+.h1 { margin: 0 0 18px; font-size: 34px; }
+
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(16,24,40,0.06);
+}
+
+.thumb {
+  height: 120px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  margin-bottom: 12px;
+
+  /* Added: allow real images to display nicely when thumbnailUrl exists */
+  background-size: cover;
+  background-position: center;
+}
+
+.title { font-weight: 800; margin-bottom: 10px; }
+
+/* Existing button style (kept) */
+.btn {
+  width: 120px;
+  background: var(--primary);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(1.05); }
+
+/* Added: Link version of the button, looks identical */
+.btnLink {
+  display: inline-block;
+  width: 120px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 300;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  text-align: center;
+}
+.btnLink:hover { filter: brightness(1.05); }
+
+/* You already used this pattern in other CSS files */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

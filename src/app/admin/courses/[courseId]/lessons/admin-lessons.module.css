@@ -1,0 +1,199 @@
+/* src/app/admin/courses/[courseId]/lessons/admin-lessons.module.css */
+.shell { display: flex; }
+.content { flex: 1; display: flex; flex-direction: column; }
+.main { flex: 1; padding: 24px 28px; }
+
+.headerRow { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 14px; }
+.h1 { margin: 0; font-size: 34px; }
+.sub { margin: 6px 0 0; color: var(--muted); }
+.badge { background: rgba(16,24,40,0.06); border: 1px solid rgba(16,24,40,0.10); padding: 8px 10px; border-radius: 999px; font-weight: 800; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(16,24,40,0.06);
+  margin-bottom: 14px;
+}
+
+.cardTitle { font-weight: 900; margin-bottom: 12px; font-size: 20px; }
+
+.form { display: grid; gap: 10px; max-width: 780px; }
+.label { font-weight: 800; color: rgba(16,24,40,0.70); }
+.input {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(16,24,40,0.14);
+  padding: 0 14px;
+  outline: none;
+}
+
+.primary {
+  width: 170px;
+  height: 44px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.secondary {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(16,24,40,0.14);
+  background: #fff;
+  color: #101828;
+  font-weight: 800;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.danger {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(239,68,68,0.30);
+  background: rgba(239,68,68,0.08);
+  color: #b42318;
+  font-weight: 900;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.modules { display: grid; gap: 12px; }
+.moduleBlock {
+  border: 1px solid rgba(16,24,40,0.12);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(255,255,255,0.6);
+}
+
+.moduleHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.moduleTitle { font-weight: 900; font-size: 18px; }
+.moduleActions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.itemsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.itemsTitle { font-weight: 900; margin-bottom: 8px; }
+.list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+
+.listRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(16,24,40,0.10);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+.itemName { font-weight: 700; }
+.linkDanger {
+  border: none;
+  background: transparent;
+  color: #b42318;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.muted { padding: 10px 0; color: var(--muted); }
+.mutedSmall { color: var(--muted); font-size: 14px; }
+.error { color: #b42318; font-weight: 800; padding: 10px 0; }
+
+/* ===== NEW: minimal additions (no redesign) ===== */
+.formActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.assessmentBox {
+  border: 1px solid rgba(16,24,40,0.10);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(255,255,255,0.8);
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .itemsGrid { grid-template-columns: 1fr; }
+}
+
+/* add to admin-lessons.module.css */
+
+.rowActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.link {
+  border: none;
+  background: transparent;
+  color: #175cd3;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.materialBox {
+  margin-top: 12px;
+  border: 1px solid rgba(16,24,40,0.10);
+  border-radius: 14px;
+  padding: 14px;
+  background: rgba(255,255,255,0.85);
+  display: grid;
+  gap: 12px;
+}
+
+.materialHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.materialList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.materialRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  border: 1px solid rgba(16,24,40,0.10);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+.materialTitle {
+  font-weight: 900;
+}
+
+.materialLink {
+  color: #475467;
+  font-weight: 700;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.materialForm {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .materialForm {
+    grid-template-columns: 1fr;
+  }
+}

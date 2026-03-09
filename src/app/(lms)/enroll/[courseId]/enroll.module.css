@@ -1,0 +1,64 @@
+/* src/app/(lms)/enroll/[courseId]/enroll.module.css */
+.shell { display: flex; }
+.content { flex: 1; display: flex; flex-direction: column; }
+.main { flex: 1; padding: 24px 28px; }
+
+.header { margin-bottom: 16px; }
+.h1 { margin: 0 0 6px; font-size: 34px; }
+.p { margin: 0; color: var(--muted); font-weight: 600; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(16,24,40,0.06);
+}
+
+.cardTitle { font-weight: 800; margin-bottom: 12px; }
+
+.form { display: grid; gap: 14px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.plan {
+  display: flex;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.radio { margin-top: 4px; }
+
+.planBody { flex: 1; display: grid; gap: 8px; }
+
+.planTop { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.planName { font-weight: 900; }
+.planPrice { color: var(--muted); font-weight: 800; }
+
+.planList { margin: 0; padding-left: 18px; color: var(--muted); }
+.planNote { font-size: 13px; color: #0f172a; opacity: .9; }
+
+.payBtn {
+  justify-self: start;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.miniNote { color: var(--muted); font-size: 12px; font-weight: 600; }
+
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,191 @@
+/* src/app/(marketing)/programs/programs.module.css */
+
+.page {
+  background: var(--bg);
+  color: var(--text);
+  padding: 4.25rem 0 4.5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  margin: 0 auto 2.75rem;
+  max-width: 900px;
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2.1rem, 3.2vw, 3rem);
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.subtitle {
+  margin: 0 auto;
+  max-width: 780px;
+  line-height: 1.75;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* Sections */
+.section {
+  margin-top: 2.5rem;
+}
+
+.sectionTitle {
+  margin: 0 0 1.25rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: var(--navy);
+}
+
+/* Lead paragraph (specialist section) */
+.lead {
+  margin: 0 0 1.35rem;
+  max-width: 860px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+/* Grids */
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+/* Specialist cards: always ONE line (scroll if needed) */
+.gridSpecialistOneLine {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 1fr);
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(198, 164, 55, 0.55) rgba(16, 24, 40, 0.06);
+}
+
+.gridSpecialistOneLine::-webkit-scrollbar {
+  height: 10px;
+}
+.gridSpecialistOneLine::-webkit-scrollbar-track {
+  background: rgba(16, 24, 40, 0.06);
+  border-radius: 999px;
+}
+.gridSpecialistOneLine::-webkit-scrollbar-thumb {
+  background: rgba(198, 164, 55, 0.55);
+  border-radius: 999px;
+}
+
+/* Card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.6rem 1.45rem;
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(198, 164, 55, 0.45);
+  box-shadow: 0 18px 34px rgba(16, 24, 40, 0.08);
+}
+
+/* (You asked earlier to remove icons generally) */
+.icon {
+  display: none;
+}
+
+.cardTitle {
+  margin: 0 0 0.5rem;
+  color: var(--navy);
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.cardDesc {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: var(--gold);
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cardLink:hover {
+  opacity: 0.92;
+}
+
+.arrow {
+  font-weight: 900;
+}
+
+/* CTA row */
+.ctaRow {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 900;
+  border: 1px solid transparent;
+  transition: opacity 0.2s ease, transform 0.08s ease;
+}
+
+.btn:hover {
+  opacity: 0.97;
+  transform: translateY(-1px);
+}
+
+.btnGold {
+  background: var(--gold);
+  color: #141414;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.btnOutline {
+  background: transparent;
+  color: var(--navy);
+  border-color: rgba(19, 46, 74, 0.35);
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .grid4 {
+    grid-template-columns: 1fr;
+  }
+}

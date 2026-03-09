@@ -1,0 +1,91 @@
+/* src/app/(marketing)/resources/articles/[slug]/slug.module.css */
+
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 4rem 0 5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.article {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.kicker {
+  margin: 0 0 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: var(--pte-gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.05rem, 3vw, 2.85rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--pte-navy);
+}
+
+.body {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.7rem 1.6rem 1.75rem;
+}
+
+.p {
+  margin: 0 0 1rem;
+  color: var(--pte-text);
+  line-height: 1.9;
+  font-size: 1.02rem;
+}
+
+.p:last-child {
+  margin-bottom: 0;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+
+.back {
+  text-decoration: none;
+  color: var(--pte-navy);
+  font-weight: 800;
+  font-size: 0.98rem;
+  padding: 0.75rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--pte-border);
+  background: #ffffff;
+}
+
+.back:hover {
+  border-color: var(--pte-gold);
+}
+
+@media (max-width: 860px) {
+  .page {
+    padding: 3rem 0 4rem;
+  }
+  .body {
+    padding: 1.25rem 1.1rem 1.3rem;
+  }
+}

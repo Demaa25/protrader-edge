@@ -1,0 +1,129 @@
+/* =========================================
+   PROTRADER EDGE – MARKETING GLOBAL STYLES
+========================================= */
+
+:root {
+  /* Brand Colours */
+  --pte-navy: #132e4a;
+  --pte-gold: #c6a437;
+  --pte-white: #ffffff;
+
+  /* Light marketing palette */
+  --pte-bg: #ffffff;
+  --pte-bg-soft: #f7f9fc;
+  --pte-border: #e6e9ef;
+  --pte-text: #1f2937;
+  --pte-text-muted: #6b7280;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Marketing Layout Background */
+body {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+/* Page wrapper helper */
+.marketing-page {
+  background: var(--pte-bg);
+  min-height: calc(100vh - 80px);
+  padding: 4rem 1rem 5rem;
+}
+
+/* Section spacing */
+.marketing-section {
+  margin-bottom: 4rem;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4 {
+  color: var(--pte-navy);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 3vw, 3rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* Links */
+a {
+  color: var(--pte-navy);
+  text-decoration: none;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--pte-navy);
+  color: var(--pte-white);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: #0f2339;
+}
+
+.btn-secondary {
+  border: 1px solid var(--pte-navy);
+  color: var(--pte-navy);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+}
+
+.btn-secondary:hover {
+  background: var(--pte-navy);
+  color: var(--pte-white);
+}
+
+/* Cards (for grids like resources, frameworks, etc.) */
+.marketing-card {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.6rem 1.5rem;
+  transition: all 0.18s ease;
+}
+
+.marketing-card:hover {
+  border-color: var(--pte-gold);
+  transform: translateY(-3px);
+}
+
+/* CTA Gold Accent */
+.gold-accent {
+  color: var(--pte-gold);
+  font-weight: 700;
+}
+
+/* Utility */
+.container-marketing {
+  max-width: 1150px;
+  margin: 0 auto;
+}

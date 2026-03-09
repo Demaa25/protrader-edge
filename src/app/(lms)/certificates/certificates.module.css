@@ -1,0 +1,22 @@
+/* src/app/certificates/certificates.module.css */
+.shell { display: flex; }
+.main { flex: 1; padding: 24px 28px; }
+.h1 { margin: 0 0 6px; font-size: 34px; }
+.p { margin: 0 0 16px; color: var(--muted); }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(16,24,40,0.06); max-width: 720px; display: grid; gap: 10px; }
+.label { font-size: 13px; font-weight: 800; color: var(--muted); }
+.select { padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
+.primary { justify-self: start; background: var(--primary); border: none; color: #fff; font-weight: 800; padding: 10px 14px; border-radius: 12px; cursor: pointer; }
+.previewWrap { margin-top: 18px; max-width: 980px; }
+.previewTitle { font-weight: 900; margin-bottom: 10px; }
+.preview { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 26px; box-shadow: 0 10px 30px rgba(16,24,40,0.06); min-height: 360px; }
+.previewHeader { font-weight: 900; font-size: 18px; }
+.previewHeader span { color: #5ee28a; }
+.big { margin-top: 14px; font-size: 36px; font-weight: 900; }
+.line { margin-top: 10px; color: var(--muted); }
+.name { font-size: 28px; font-weight: 900; }
+.course { font-size: 18px; font-weight: 800; margin-top: 4px; }
+.bottom { margin-top: 26px; display: flex; justify-content: space-between; color: var(--muted); }
+.seal { font-weight: 900; color: #1f5eff; }
+.actions { margin-top: 12px; display: flex; gap: 10px; }
+.secondary { background: transparent; border: 1px solid var(--border); padding: 10px 12px; border-radius: 12px; cursor: pointer; }

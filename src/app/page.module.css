@@ -1,0 +1,347 @@
+/* src/app/page.module.css */
+/* Standalone homepage styles (NOT tied to marketing-globals.css) */
+
+:root {
+  --navy: #132e4a;
+  --gold: #c6a437;
+  --white: #ffffff;
+
+  /* Light page palette */
+  --bg: #eef1f4;
+  --bg-soft: #f7f9fc;
+
+  --text: #0f172a;
+  --muted: rgba(15, 23, 42, 0.74);
+
+  --card: rgba(255, 255, 255, 0.92);
+  --border: rgba(15, 23, 42, 0.12);
+
+  --shadow: 0 12px 30px rgba(2, 6, 23, 0.10);
+  --shadow-soft: 0 10px 22px rgba(2, 6, 23, 0.08);
+}
+
+.main {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Layout */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ================= HERO ================= */
+.hero {
+  position: relative;
+  color: var(--white);
+  text-align: center;
+  padding: 5.75rem 0 4.75rem;
+
+  /* Hero image (as you set in page.tsx earlier) */
+  background-image: url("/images/home/hero-2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--navy);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(19, 46, 74, 0.74) 0%,
+    rgba(19, 46, 74, 0.86) 55%,
+    rgba(19, 46, 74, 0.92) 100%
+  );
+}
+
+.hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.heroTitle {
+  margin: 0 auto 1.25rem;
+  max-width: 980px;
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  font-weight: 900;
+  color: var(--white);
+}
+
+.heroSubtitle {
+  margin: 0 auto 2rem;
+  max-width: 820px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.heroActions {
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+/* ================= SECTIONS ================= */
+.section {
+  padding: 4.25rem 0;
+  background: var(--bg);
+}
+
+.sectionAlt {
+  padding: 4.25rem 0;
+  background: var(--bg-soft);
+}
+
+.sectionTitle {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.65rem, 2.4vw, 2rem);
+  letter-spacing: -0.01em;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.sectionLead {
+  margin: 0;
+  max-width: 820px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ================= WHY (match screenshot) ================= */
+.whySection {
+  padding: 4.25rem 0;
+  background: var(--bg);
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.9rem;
+  align-items: stretch;
+}
+
+.featureCard {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.35rem 1.25rem 1.25rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.featureIconWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.9rem;
+}
+
+.featureIcon {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.10));
+}
+
+.featureTitle {
+  margin: 0 0 0.55rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.featureDesc {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ================= TRAINING PATH (icons + clean cards) ================= */
+.trainingSection {
+  padding: 4.25rem 0;
+  background: var(--bg-soft);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+  align-items: stretch;
+}
+
+.programCard {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem 1.4rem 1.35rem;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.programIconWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.95rem;
+}
+
+.programIcon {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.10));
+}
+
+.programTitle {
+  margin: 0 0 0.45rem;
+  font-size: 1.2rem;
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.programDesc {
+  margin: 0 0 1.15rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.programCard :global(a) {
+  /* Defensive: ensure your global a{} styles never override button-links in cards */
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ================= CTA (Begin Structured Training) ================= */
+.cta {
+  background: var(--navy);
+  color: var(--white);
+  text-align: center;
+  padding: 4.75rem 0;
+
+  /* Defensive: make sure it stays full-width and visually separated */
+  width: 100%;
+}
+
+.ctaTitle {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.75rem, 2.6vw, 2.15rem);
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
+
+.ctaSubtitle {
+  margin: 0 auto 1.85rem;
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.84);
+  line-height: 1.7;
+}
+
+/* ================= BUTTONS ================= */
+/* These are Link elements, so we must force colors to beat global `a { color: ... }` */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  text-decoration: none;
+  border-radius: 12px;
+  padding: 0.9rem 1.35rem;
+
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1;
+
+  border: 1px solid transparent;
+
+  transition: transform 0.08s ease, opacity 0.18s ease, background 0.18s ease,
+    border-color 0.18s ease, box-shadow 0.18s ease;
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:visited {
+  color: inherit; /* prevents visited link coloring */
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.97;
+}
+
+.btn:active {
+  transform: translateY(0px);
+  opacity: 0.98;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(198, 164, 55, 0.25);
+}
+
+.btnGold {
+  background: var(--gold);
+  color: #141414 !important;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.btnGold:hover {
+  background: #d4b24a;
+}
+
+.btnOutline {
+  background: transparent;
+  color: var(--white) !important;
+  border-color: rgba(255, 255, 255, 0.72);
+}
+
+.btnOutline:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.82);
+}
+
+/* Used on light sections (cards + specialist link) */
+.btnDark {
+  background: var(--navy);
+  color: var(--white) !important;
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+.btnDark:hover {
+  background: #0f2339;
+}
+
+.btnSmall {
+  padding: 0.75rem 1.05rem;
+  border-radius: 11px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1100px) {
+  .featureGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    padding: 4.75rem 0 3.5rem;
+  }
+}

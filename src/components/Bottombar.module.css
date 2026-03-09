@@ -1,0 +1,52 @@
+/* src/components/Bottombar.module.css */
+
+.bar {
+  height: 60px;
+  background: #f3f5fa;
+  border-top: 1px solid rgba(16, 24, 40, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475467;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.link {
+  text-decoration: none;
+  color: #344054;
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bar {
+    flex-direction: column;
+    height: auto;
+    padding: 14px;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .right {
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

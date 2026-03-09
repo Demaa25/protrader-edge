@@ -1,0 +1,154 @@
+/* src/app/(marketing)/resources/tools/r-multiple/r-multiple.module.css */
+
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 4rem 0 5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.kicker {
+  margin: 0 0 0.6rem;
+  color: var(--pte-text-muted);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.title {
+  margin: 0 0 0.9rem;
+  color: var(--pte-navy);
+  font-weight: 900;
+  font-size: clamp(2rem, 2.8vw, 2.7rem);
+  letter-spacing: -0.02em;
+}
+
+.intro {
+  margin: 0 auto;
+  max-width: 85ch;
+  color: var(--pte-text-muted);
+  line-height: 1.75;
+}
+
+.panel {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 16px;
+  padding: 1.35rem 1.35rem 1.1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.9rem 1.1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.label {
+  color: var(--pte-navy);
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.input {
+  padding: 0.78rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid var(--pte-border);
+  background: var(--pte-white);
+  color: var(--pte-text);
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(198, 164, 55, 0.7);
+  box-shadow: 0 0 0 3px rgba(198, 164, 55, 0.18);
+}
+
+.result {
+  margin-top: 1.25rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--pte-border);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.rLabel {
+  color: var(--pte-text-muted);
+  font-weight: 800;
+}
+
+.rValue {
+  color: var(--pte-text);
+  font-weight: 900;
+}
+
+.rValueGold {
+  color: var(--pte-gold);
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+.note {
+  margin: 0.85rem 0 0;
+  color: var(--pte-text-muted);
+  line-height: 1.7;
+}
+
+.actions {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: center;
+}
+
+.secondaryBtn {
+  text-decoration: none;
+  color: var(--pte-navy);
+  border: 1px solid var(--pte-navy);
+  background: transparent;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.95rem;
+}
+
+.secondaryBtn:hover {
+  background: var(--pte-navy);
+  color: var(--pte-white);
+}
+
+.disclaimer {
+  margin: 1rem 0 0;
+  text-align: center;
+  color: var(--pte-text-muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

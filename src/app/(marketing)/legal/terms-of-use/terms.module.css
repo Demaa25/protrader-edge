@@ -1,0 +1,108 @@
+/* src/app/(marketing)/legal/terms-of-use/terms.module.css */
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 4rem 0 5rem;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: clamp(2.2rem, 3vw, 3rem);
+  margin: 0;
+  color: var(--pte-navy);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.card {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 2rem;
+}
+
+.lead {
+  margin: 0 0 2rem;
+  line-height: 1.8;
+  color: var(--pte-text);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  border-top: 1px solid var(--pte-border);
+  padding-top: 1rem;
+}
+
+.block {
+  border-bottom: 1px solid var(--pte-border);
+  padding-bottom: 1.2rem;
+}
+
+.block:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.h2 {
+  color: var(--pte-navy);
+  font-size: 1.15rem;
+  margin: 0 0 0.6rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.p {
+  margin: 0 0 0.75rem;
+  line-height: 1.75;
+  color: var(--pte-text);
+  font-size: 0.98rem;
+}
+
+.p:last-child {
+  margin-bottom: 0;
+}
+
+.list {
+  padding-left: 1.2rem;
+  margin: 0;
+  line-height: 1.75;
+  color: var(--pte-text);
+  font-size: 0.98rem;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
+}
+
+.list li:last-child {
+  margin-bottom: 0;
+}
+
+.card a {
+  color: var(--pte-navy);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.card a:hover {
+  color: var(--pte-gold);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 1.35rem 1.15rem;
+  }
+}

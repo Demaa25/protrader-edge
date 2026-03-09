@@ -1,0 +1,212 @@
+/* src/app/(marketing)/resources/research/research.module.css */
+
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  min-height: calc(100vh - 80px);
+  padding: 4rem 0 5rem;
+}
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  margin-bottom: 2.75rem;
+}
+
+.title {
+  margin: 0 0 0.9rem;
+  font-size: clamp(2.2rem, 3vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--pte-navy);
+}
+
+.intro {
+  margin: 0 auto;
+  max-width: 860px;
+  color: var(--pte-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+/* SECTIONS */
+.section {
+  max-width: 980px;
+  margin: 0 auto 2.25rem;
+}
+
+.h2 {
+  margin: 0 0 0.9rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+}
+
+.h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+}
+
+.p {
+  margin: 0 0 0.85rem;
+  color: var(--pte-text);
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.p:last-child {
+  margin-bottom: 0;
+}
+
+.pSmall {
+  margin: 0;
+  color: var(--pte-text-muted);
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
+/* 4-domain cards in one line; scroll on smaller screens */
+.domains {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.domainCard {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.25rem 1.2rem;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.domainCard:hover {
+  border-color: rgba(198, 164, 55, 0.7);
+  transform: translateY(-2px);
+}
+
+/* “Flow” highlight box */
+.flow {
+  margin: 0 0 0.9rem;
+  padding: 0.95rem 1rem;
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 12px;
+  color: var(--pte-text);
+  font-size: 0.98rem;
+  overflow-x: auto;
+}
+
+/* Muted callout panel */
+.muted {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.35rem 1.35rem 1.45rem;
+}
+
+.list {
+  margin: 0.25rem 0 0.85rem;
+  padding-left: 1.2rem;
+  color: var(--pte-text);
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.list li {
+  margin-bottom: 0.45rem;
+}
+
+.list li:last-child {
+  margin-bottom: 0;
+}
+
+/* CTA links row */
+.cta {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 2.25rem;
+}
+
+.ctaLink {
+  text-decoration: none;
+  color: var(--pte-navy);
+  font-weight: 800;
+  font-size: 0.98rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.95rem 1.05rem;
+  border-radius: 12px;
+
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.ctaLink:hover {
+  border-color: rgba(198, 164, 55, 0.7);
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.arrow {
+  display: inline-block;
+  transform: translateY(1px);
+  color: var(--pte-gold);
+}
+
+/* Scroll behavior for domains row */
+@media (max-width: 1100px) {
+  .domains {
+    grid-template-columns: repeat(4, 260px);
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    scroll-snap-type: x mandatory;
+  }
+
+  .domainCard {
+    scroll-snap-align: start;
+  }
+
+  .domains::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .domains::-webkit-scrollbar-track {
+    background: var(--pte-border);
+    border-radius: 999px;
+  }
+
+  .domains::-webkit-scrollbar-thumb {
+    background: rgba(198, 164, 55, 0.55);
+    border-radius: 999px;
+  }
+}
+
+@media (max-width: 860px) {
+  .page {
+    padding: 3rem 0 4rem;
+  }
+
+  .section {
+    margin-bottom: 2rem;
+  }
+
+  .muted {
+    padding: 1.15rem 1.05rem 1.2rem;
+  }
+}

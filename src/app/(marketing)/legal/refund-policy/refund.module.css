@@ -1,0 +1,109 @@
+/* src/app/(marketing)/legal/refund-policy/refund.module.css */
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 4rem 0 5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.1rem, 3.2vw, 3rem);
+  color: var(--pte-navy);
+  letter-spacing: -0.02em;
+  font-weight: 900;
+}
+
+.card {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 2rem;
+}
+
+.lead {
+  margin: 0 0 1.75rem;
+  line-height: 1.8;
+  color: var(--pte-text);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  border-top: 1px solid var(--pte-border);
+  padding-top: 1.5rem;
+}
+
+.block {
+  border-bottom: 1px solid var(--pte-border);
+  padding-bottom: 1.2rem;
+}
+
+.block:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.h2 {
+  margin: 0 0 0.65rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+}
+
+.p {
+  margin: 0 0 0.85rem;
+  color: var(--pte-text);
+  line-height: 1.75;
+  font-size: 0.98rem;
+}
+
+.p:last-child {
+  margin-bottom: 0;
+}
+
+.list {
+  margin: 0 0 0.85rem;
+  padding-left: 1.2rem;
+  color: var(--pte-text);
+  line-height: 1.75;
+  font-size: 0.98rem;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
+}
+
+.list li:last-child {
+  margin-bottom: 0;
+}
+
+.card a {
+  color: var(--pte-navy);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.card a:hover {
+  color: var(--pte-gold);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 1.35rem 1.15rem;
+  }
+}

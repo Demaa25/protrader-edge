@@ -1,0 +1,455 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?  @unique
+  password  String? // used by Credentials provider (hashed)
+  role      UserRole @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // NEW — legal acknowledgements
+  acceptedTermsOfUse Boolean @default(false)
+  acceptedPrivacyPolicy Boolean @default(false)
+  termsAcceptedAt DateTime?
+  privacyAcceptedAt DateTime?
+
+  accounts Account[]
+  sessions Session[]
+
+  // LMS relations
+  enrollments    Enrollment[]
+  lessonProgress LessonProgress[]
+  certificates   Certificate[]
+
+  // NEW (payments)
+  purchases Purchase[]
+
+  // NEW (evaluations)
+  evaluationAttempts EvaluationAttempt[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
+}
+
+model Course {
+  id           String  @id @default(cuid())
+  title        String
+  category     String  @default("Forex")
+  description  String?
+  thumbnailUrl String?
+  published    Boolean @default(false)
+
+  priceKobo Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // content structure
+  modules Module[]
+
+  // IMPORTANT: these are the missing opposite fields Prisma complained about
+  enrollments  Enrollment[]
+  certificates Certificate[]
+
+  // NEW (payments)
+  purchases Purchase[]
+
+  // NEW (evaluations)
+  evaluations Evaluation[]
+}
+
+model Module {
+  id        String   @id @default(cuid())
+  courseId  String
+  title     String
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+
+  // NEW (evaluations) - module assessments live here
+  evaluations Evaluation[]
+
+  @@unique([courseId, order])
+  @@index([courseId])
+}
+
+model Lesson {
+  id        String   @id @default(cuid())
+  moduleId  String
+  title     String
+  content   String?
+  videoUrl  String?
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  progresses LessonProgress[]
+
+  // Lesson materials
+  materials LessonMaterial[]
+
+  // NEW (evaluations) - lesson quizzes live here
+  evaluations Evaluation[]
+
+  @@unique([moduleId, order])
+  @@index([moduleId])
+}
+
+enum LessonMaterialType {
+  VIDEO
+  DOCUMENT
+}
+
+model LessonMaterial {
+  id       String             @id @default(cuid())
+  lessonId String
+  type     LessonMaterialType
+  title    String
+  url      String
+  order    Int                @default(0)
+
+  fileName  String?
+  mimeType  String?
+  sizeBytes Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([lessonId, order])
+  @@index([lessonId])
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+model LessonProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([lessonId])
+}
+
+model Certificate {
+  id                String   @id @default(cuid())
+  userId            String
+  courseId          String
+  certificateNumber String   @unique
+  issuedAt          DateTime @default(now())
+  pdfUrl            String?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
+
+//
+// =========================
+// QUESTION BANKS (shared)
+// =========================
+//
+
+enum BankType {
+  QUIZ
+  ASSESSMENT
+  TEST
+}
+
+model QuestionBank {
+  id        String   @id @default(cuid())
+  name      String
+  type      BankType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  questions BankQuestion[]
+  uses      Evaluation[]
+
+  @@unique([name, type])
+  @@index([type])
+}
+
+model BankQuestion {
+  id        String   @id @default(cuid())
+  bankId    String
+  prompt    String
+  order     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bank    QuestionBank @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  options BankOption[]
+
+  // which attempts selected this question
+  attemptQuestions AttemptQuestion[]
+
+  @@index([bankId])
+}
+
+model BankOption {
+  id          String  @id @default(cuid())
+  questionId  String
+  label       String // "A" | "B" | "C" | "D"
+  text        String
+  isCorrect   Boolean @default(false)
+  explanation String? // can be stored on correct option only (your rule)
+
+  question BankQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, label])
+  @@index([questionId])
+}
+
+//
+// =========================
+// QUIZ / ASSESSMENT / TEST (unified)
+// =========================
+//
+
+enum EvaluationType {
+  QUIZ // small quiz (between lessons)
+  ASSESSMENT // after module
+  TEST // end of program
+}
+
+model Evaluation {
+  id    String         @id @default(cuid())
+  type  EvaluationType
+  title String
+
+  // Which bank powers it (30 questions etc.)
+  bankId String
+  bank   QuestionBank @relation(fields: [bankId], references: [id], onDelete: Restrict)
+
+  // Attach it to the curriculum:
+  courseId String
+  moduleId String?
+  lessonId String?
+
+  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  module Module? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  lesson Lesson? @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  // behaviour
+  questionCount Int     @default(10) // randomly pick 10 each attempt
+  passMarkPct   Int     @default(70)
+  randomize     Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  attempts EvaluationAttempt[]
+
+  // Recommended constraints to avoid duplicates:
+  // - one QUIZ per lesson (if you want)
+  // - one ASSESSMENT per module (if you want)
+  // - one TEST per course (if you want)
+  //
+  // NOTE: Prisma doesn't support partial unique by enum condition,
+  // so we use multi-unique keys. Your app should enforce type rules.
+  @@unique([lessonId, type])
+  @@unique([moduleId, type])
+  @@index([courseId])
+  @@index([moduleId])
+  @@index([lessonId])
+  @@index([bankId])
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  SUBMITTED
+}
+
+model EvaluationAttempt {
+  id           String @id @default(cuid())
+  evaluationId String
+  userId       String
+
+  status AttemptStatus @default(IN_PROGRESS)
+
+  // scoring
+  scorePct       Int     @default(0)
+  correctCount   Int     @default(0)
+  totalQuestions Int     @default(0)
+  passed         Boolean @default(false)
+
+  startedAt   DateTime  @default(now())
+  submittedAt DateTime?
+
+  evaluation Evaluation @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // the exact questions selected for this attempt
+  questions AttemptQuestion[]
+
+  @@index([evaluationId])
+  @@index([userId])
+  @@index([startedAt])
+}
+
+model AttemptQuestion {
+  id         String @id @default(cuid())
+  attemptId  String
+  questionId String
+  order      Int
+
+  attempt  EvaluationAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question BankQuestion      @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  answer AttemptAnswer?
+
+  @@unique([attemptId, order])
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+  @@index([questionId])
+}
+
+model AttemptAnswer {
+  id                String   @id @default(cuid())
+  attemptQuestionId String   @unique
+  selectedOptionId  String?
+  isCorrect         Boolean  @default(false)
+  answeredAt        DateTime @default(now())
+
+  attemptQuestion AttemptQuestion @relation(fields: [attemptQuestionId], references: [id], onDelete: Cascade)
+}
+
+//
+// =========================
+// PAYMENTS / INSTALLMENTS (unchanged)
+// =========================
+//
+
+enum PurchaseStatus {
+  PENDING
+  PARTIAL
+  PAID
+  FAILED
+}
+
+enum InstallmentPlan {
+  FULL
+  TWO_PART
+  THREE_PART
+}
+
+enum InstallmentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+model Purchase {
+  id       String @id @default(cuid())
+  userId   String
+  courseId String
+
+  planType   InstallmentPlan @default(FULL)
+  totalKobo  Int
+  amountKobo Int
+
+  status    PurchaseStatus @default(PENDING)
+  reference String?        @unique
+  createdAt DateTime       @default(now())
+  paidAt    DateTime?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  installments Installment[]
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+  @@index([userId])
+}
+
+model Installment {
+  id            String            @id @default(cuid())
+  purchaseId    String
+  installmentNo Int
+  amountKobo    Int
+  dueDate       DateTime?
+  status        InstallmentStatus @default(PENDING)
+  reference     String?           @unique
+  paidAt        DateTime?
+
+  purchase Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+
+  @@unique([purchaseId, installmentNo])
+  @@index([purchaseId])
+}

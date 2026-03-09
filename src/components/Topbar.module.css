@@ -1,0 +1,49 @@
+/* src/components/Topbar.module.css */
+.topbar {
+  height: 56px;
+  background: #f3f5fa;
+  border-bottom: 1px solid rgba(16, 24, 40, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #344054;
+  font-weight: 600;
+}
+
+.crumbHome {
+  opacity: 0.8;
+}
+
+.crumb {
+  font-size: 14px;
+  color: #475467;
+}
+
+.sep {
+  margin: 0 8px;
+  opacity: 0.5;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #101828;
+  font-weight: 700;
+  cursor: default;
+}
+
+.userName {
+  font-size: 14px;
+}
+
+.chev {
+  opacity: 0.7;
+}

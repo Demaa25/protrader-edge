@@ -1,0 +1,138 @@
+/* src/app/(marketing)/programs/specialist/risk/risk.module.css */
+
+/* Uses marketing-globals.css variables if present, with fallbacks */
+.page {
+  background: var(--pte-bg, #ffffff);
+  color: var(--pte-text, #1f2937);
+  padding: 4.25rem 0 4.75rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+.header {
+  margin-bottom: 2.25rem;
+}
+
+.trackLabel {
+  color: var(--pte-gold, #c6a437);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  font-weight: 900;
+  color: var(--pte-navy, #132e4a);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin-top: 0.9rem;
+  max-width: 850px;
+  line-height: 1.75;
+  color: var(--pte-text-muted);
+  font-size: 1.05rem;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 2.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--pte-border, rgba(16, 24, 40, 0.12));
+}
+
+.h2 {
+  margin: 0 0 0.7rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--pte-navy, #132e4a);
+  letter-spacing: -0.01em;
+}
+
+.paragraph {
+  color: var(--pte-text-muted);
+  line-height: 1.75;
+  max-width: 900px;
+}
+
+/* Lists */
+.list {
+  padding-left: 1.2rem;
+  margin: 0;
+  color: var(--pte-text-muted);
+  line-height: 1.75;
+}
+
+.list li {
+  margin-bottom: 0.6rem;
+}
+
+/* Footer */
+.footer {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 900;
+  border: 1px solid transparent;
+  transition: transform 120ms ease, opacity 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.btn:hover {
+  opacity: 0.96;
+  transform: translateY(-1px);
+}
+
+.btnGold {
+  background: var(--pte-gold, #c6a437);
+  color: #141414;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.btnGold:hover {
+  background: #d4b24a;
+}
+
+.btnOutline {
+  background: transparent;
+  color: var(--pte-navy, #132e4a);
+  border-color: var(--pte-border, rgba(16, 24, 40, 0.16));
+}
+
+.btnOutline:hover {
+  border-color: rgba(198, 164, 55, 0.45);
+  background: rgba(198, 164, 55, 0.10);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

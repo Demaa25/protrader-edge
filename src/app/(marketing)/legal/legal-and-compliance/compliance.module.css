@@ -1,0 +1,114 @@
+/* src/app/(marketing)/legal/legal-and-compliance/compliance.module.css */
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 3.75rem 0 4.5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.1rem, 3.2vw, 3rem);
+  color: var(--pte-navy);
+  letter-spacing: -0.02em;
+  font-weight: 900;
+}
+
+/* Main content panel */
+.card {
+  max-width: 980px;
+  margin: 0 auto;
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.75rem 1.75rem 1.9rem;
+}
+
+.lead {
+  margin: 0 0 1.25rem;
+  color: var(--pte-text);
+  line-height: 1.75;
+  font-size: 1.02rem;
+}
+
+/* Stacked content */
+.stack {
+  border-top: 1px solid var(--pte-border);
+  padding-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.block {
+  border-bottom: 1px solid var(--pte-border);
+  padding-bottom: 1.2rem;
+}
+
+.block:last-child {
+  border-bottom: none;
+}
+
+.h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+}
+
+.p {
+  margin: 0 0 0.75rem;
+  color: var(--pte-text);
+  line-height: 1.75;
+  font-size: 0.98rem;
+}
+
+.p:last-child {
+  margin-bottom: 0;
+}
+
+.list {
+  margin: 0.4rem 0 0.75rem;
+  padding-left: 1.2rem;
+  color: var(--pte-text);
+  line-height: 1.75;
+  font-size: 0.98rem;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
+}
+
+.list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Legal links */
+.card a {
+  color: var(--pte-navy);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.card a:hover {
+  color: var(--pte-gold);
+  text-decoration: underline;
+}
+
+@media (max-width: 860px) {
+  .card {
+    padding: 1.35rem 1.25rem 1.5rem;
+  }
+}

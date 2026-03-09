@@ -1,0 +1,348 @@
+/* src/app/(marketing)/contact/contact.module.css */
+:root {
+  --navy: #132e4a;
+  --gold: #c6a437;
+  --body: #d6d9de;
+  --white: #ffffff;
+}
+
+.page {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.88);
+  padding: 3.75rem 0 4.5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Title */
+.hero {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.1rem, 3.2vw, 3rem);
+  color: var(--white);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+/* Main panel like screenshot */
+.panel {
+  margin: 0 auto;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: rgba(0, 0, 0, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Columns */
+.left,
+.right {
+  padding: 2rem 2rem 2.25rem;
+}
+
+.left {
+  border-right: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.panelTitle {
+  margin: 0 0 1.25rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: 0.01em;
+}
+
+/* Left side content */
+.emails p {
+  margin: 0 0 0.65rem;
+  color: rgba(214, 217, 222, 0.9);
+  line-height: 1.6;
+}
+
+.emails strong {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.intro {
+  margin: 1.25rem 0 0;
+  max-width: 420px;
+  line-height: 1.75;
+  color: rgba(214, 217, 222, 0.82);
+}
+
+/* Form */
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.row {
+  display: block;
+}
+
+.label {
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+  color: rgba(214, 217, 222, 0.9);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.90);
+  color: #101828;
+  padding: 0.7rem 0.8rem;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: rgba(198, 164, 55, 0.55);
+  box-shadow: 0 0 0 3px rgba(198, 164, 55, 0.18);
+}
+
+/* Submit */
+.button {
+  justify-self: start;
+  margin-top: 0.25rem;
+  background: var(--gold);
+  color: #141414;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 0.7rem 1.25rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.08s ease;
+}
+
+.button:hover {
+  opacity: 0.96;
+  transform: translateY(-1px);
+}
+
+/* Success state */
+.success {
+  border-radius: 12px;
+  border: 1px solid rgba(198, 164, 55, 0.30);
+  background: rgba(198, 164, 55, 0.10);
+  padding: 1.25rem 1.15rem;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.7;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .panel {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  .left,
+  .right {
+    padding: 1.5rem;
+  }
+
+  .button {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 3.75rem 0 4.5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Title */
+.hero {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.1rem, 3.2vw, 3rem);
+  color: var(--pte-navy);
+  letter-spacing: -0.02em;
+  font-weight: 900;
+}
+
+/* Main panel */
+.panel {
+  margin: 0 auto;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Columns */
+.left,
+.right {
+  padding: 2rem 2rem 2.25rem;
+}
+
+.left {
+  border-right: 1px solid var(--pte-border);
+}
+
+.panelTitle {
+  margin: 0 0 1.25rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+}
+
+/* Left content */
+.emails p {
+  margin: 0 0 0.65rem;
+  color: var(--pte-text);
+  line-height: 1.6;
+}
+
+.emails strong {
+  color: var(--pte-navy);
+}
+
+.intro {
+  margin: 1.25rem 0 0;
+  max-width: 420px;
+  line-height: 1.75;
+  color: var(--pte-text-muted);
+}
+
+/* Form */
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.row {
+  display: block;
+}
+
+.label {
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+  color: var(--pte-text);
+  font-weight: 700;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--pte-border);
+  background: #ffffff;
+  color: var(--pte-text);
+  padding: 0.75rem 0.85rem;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: rgba(198, 164, 55, 0.55);
+  box-shadow: 0 0 0 3px rgba(198, 164, 55, 0.16);
+}
+
+/* Submit */
+.button {
+  justify-self: start;
+  margin-top: 0.25rem;
+  background: var(--pte-gold);
+  color: #141414;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  padding: 0.75rem 1.25rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.08s ease;
+}
+
+.button:hover {
+  opacity: 0.96;
+  transform: translateY(-1px);
+}
+
+/* Success */
+.success {
+  border-radius: 12px;
+  border: 1px solid rgba(198, 164, 55, 0.35);
+  background: rgba(198, 164, 55, 0.12);
+  padding: 1.25rem 1.15rem;
+  color: var(--pte-text);
+  line-height: 1.7;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .panel {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    border-right: none;
+    border-bottom: 1px solid var(--pte-border);
+  }
+
+  .left,
+  .right {
+    padding: 1.5rem;
+  }
+
+  .button {
+    width: 100%;
+    justify-self: stretch;
+  }
+}

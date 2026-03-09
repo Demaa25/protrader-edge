@@ -1,0 +1,38 @@
+/* src/app/settings/settings.module.css */
+.shell { display: flex; }
+.main { flex: 1; padding: 24px 28px; }
+.h1 { margin: 0 0 18px; font-size: 34px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(16,24,40,0.06); margin-bottom: 16px; max-width: 980px; }
+.cardTitle { font-weight: 800; margin-bottom: 12px; }
+.row { display: flex; gap: 16px; align-items: flex-start; }
+.avatar { width: 92px; height: 92px; border-radius: 999px; background: rgba(16,24,40,0.08); border: 1px solid var(--border); }
+.form { flex: 1; display: grid; gap: 10px; }
+.label { color: var(--muted); font-size: 13px; font-weight: 700; }
+.input { padding: 12px 12px; border-radius: 12px; border: 1px solid var(--border); outline: none; }
+.primary { justify-self: start; background: var(--primary); border: none; color: #fff; font-weight: 800; padding: 10px 14px; border-radius: 12px; cursor: pointer; }
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+/* Add to src/app/settings/settings.module.css */
+
+.err {
+  color: #b42318;
+  background: rgba(180, 35, 24, 0.06);
+  border: 1px solid rgba(180, 35, 24, 0.18);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.ok {
+  color: #067647;
+  background: rgba(6, 118, 71, 0.08);
+  border: 1px solid rgba(6, 118, 71, 0.18);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 13px;
+}

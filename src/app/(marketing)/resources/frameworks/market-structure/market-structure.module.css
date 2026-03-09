@@ -1,0 +1,136 @@
+/* src/app/(marketing)/resources/frameworks/market-structure/market-structure.module.css */
+
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 4rem 0 5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2.75rem;
+}
+
+.title {
+  font-size: clamp(2.2rem, 3vw, 3rem);
+  font-weight: 800;
+  margin: 0 0 0.85rem;
+  letter-spacing: -0.02em;
+  color: var(--pte-navy);
+}
+
+.purpose {
+  color: var(--pte-gold);
+  font-weight: 800;
+  margin: 0 0 0.6rem;
+  letter-spacing: 0.02em;
+}
+
+.lead {
+  font-size: 1.05rem;
+  max-width: 78ch;
+  margin: 0 auto 0.75rem;
+  line-height: 1.75;
+  color: var(--pte-text-muted);
+}
+
+.question {
+  margin: 0.5rem auto 0;
+  max-width: 85ch;
+  color: var(--pte-text-muted);
+}
+
+.highlight {
+  font-weight: 800;
+  color: var(--pte-gold);
+  margin-top: 0.6rem;
+}
+
+/* Sections */
+.section {
+  margin: 0 auto 2.25rem;
+  max-width: 1000px;
+}
+
+.section h2 {
+  font-size: 1.45rem;
+  margin: 0 0 0.9rem;
+  color: var(--pte-navy);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.section ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  line-height: 1.85;
+}
+
+.section ul li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.6rem;
+  color: var(--pte-text);
+}
+
+.section ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--pte-gold);
+  font-weight: 900;
+}
+
+/* State cards grid */
+.stateGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.stateCard {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.35rem 1.25rem;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.stateCard:hover {
+  border-color: var(--pte-gold);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(17, 24, 39, 0.08);
+}
+
+.stateCard h3 {
+  margin: 0 0 0.5rem;
+  color: var(--pte-navy);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.stateCard p {
+  margin: 0;
+  color: var(--pte-text-muted);
+  line-height: 1.65;
+}
+
+/* Disclaimer */
+.disclaimer {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--pte-border);
+  color: var(--pte-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}

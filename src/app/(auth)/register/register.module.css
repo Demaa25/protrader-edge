@@ -1,0 +1,166 @@
+/* src/app/(auth)/register/register.module.css */
+.wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(1200px 600px at 50% 0%, #2d3a52 0%, #132e4a 60%, #101624 100%);
+  padding: 24px;
+}
+
+.card {
+  width: 460px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  padding: 28px;
+  color: #e8eefc;
+  backdrop-filter: blur(10px);
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  margin-bottom: 22px;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  object-fit: cover;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.brand {
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #e8eefc;
+}
+
+.brand span {
+  color: #c6a437;
+}
+
+.h1 {
+  margin: 0;
+  font-size: 34px;
+  text-align: center;
+}
+
+.p {
+  margin: 8px 0 18px 0;
+  opacity: 0.85;
+  text-align: center;
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+}
+
+.label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  padding: 12px 12px;
+  border-radius: 10px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(198, 164, 55, 0.5);
+  box-shadow: 0 0 0 3px rgba(198, 164, 55, 0.16);
+}
+
+.btn {
+  margin-top: 8px;
+  background: linear-gradient(180deg, #2a6bff 0%, #1f5eff 100%);
+  border: none;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+}
+
+.footer {
+  margin-top: 14px;
+  font-size: 13px;
+  opacity: 0.9;
+  text-align: center;
+}
+
+.link {
+  color: #8bb0ff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.inlineLink {
+  color: #8bb0ff;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.inlineLink:hover {
+  text-decoration: underline;
+}
+
+.err {
+  background: rgba(255, 64, 64, 0.15);
+  border: 1px solid rgba(255, 64, 64, 0.35);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.ok {
+  background: rgba(94, 226, 138, 0.12);
+  border: 1px solid rgba(94, 226, 138, 0.28);
+  padding: 10px;
+  border-radius: 10px;
+  color: rgba(232, 238, 252, 0.95);
+}
+
+.legal {
+  margin-top: 6px;
+  display: grid;
+  gap: 8px;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.checkboxRow input {
+  margin-top: 2px;
+  accent-color: #c6a437;
+}

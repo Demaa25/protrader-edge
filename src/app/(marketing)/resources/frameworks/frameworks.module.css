@@ -1,0 +1,322 @@
+/* src/app/(marketing)/resources/frameworks/frameworks.module.css */
+/* Uses marketing-globals.css variables (no local :root overrides) */
+
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  min-height: calc(100vh - 80px);
+  padding: 4rem 0 5rem;
+}
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2.75rem;
+}
+
+.title {
+  margin: 0 0 1rem;
+  font-size: clamp(2.2rem, 3vw, 3rem);
+  font-weight: 800;
+  color: var(--pte-navy);
+  letter-spacing: -0.02em;
+}
+
+.intro {
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--pte-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.sectionTitle {
+  margin: 2.25rem 0 1.25rem;
+  text-align: center;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--pte-border);
+}
+
+/* Keep 4 cards on one line */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(4, 280px);
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .card {
+    scroll-snap-align: start;
+  }
+
+  .grid::-webkit-scrollbar {
+    height: 10px;
+  }
+  .grid::-webkit-scrollbar-track {
+    background: rgba(19, 46, 74, 0.08);
+    border-radius: 999px;
+  }
+  .grid::-webkit-scrollbar-thumb {
+    background: rgba(198, 164, 55, 0.45);
+    border-radius: 999px;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.6rem 1.5rem;
+  min-height: 220px;
+
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(198, 164, 55, 0.65);
+  box-shadow: 0 18px 40px rgba(17, 24, 39, 0.08);
+}
+
+.card h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.12rem;
+  font-weight: 900;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--pte-text-muted);
+}
+
+.cta {
+  margin-top: 1.1rem;
+  color: var(--pte-gold);
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arrow {
+  display: inline-block;
+  transform: translateY(1px);
+}
+
+/* Evolution section */
+.evolveSection {
+  margin-top: 2.75rem;
+  text-align: center;
+}
+
+.evolveIntro {
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--pte-text-muted);
+  line-height: 1.75;
+  font-size: 1.02rem;
+}
+
+.evolveGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 1.15rem;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 980px) {
+  .evolveGrid {
+    grid-template-columns: repeat(3, 340px);
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .evolveCard {
+    scroll-snap-align: start;
+  }
+
+  .evolveGrid::-webkit-scrollbar {
+    height: 10px;
+  }
+  .evolveGrid::-webkit-scrollbar-track {
+    background: rgba(19, 46, 74, 0.08);
+    border-radius: 999px;
+  }
+  .evolveGrid::-webkit-scrollbar-thumb {
+    background: rgba(198, 164, 55, 0.45);
+    border-radius: 999px;
+  }
+}
+
+.evolveCard {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.25rem 1.25rem 1.15rem;
+  text-align: left;
+}
+
+.evolveH3 {
+  margin: 0 0 0.75rem;
+  color: var(--pte-navy);
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.evolveList {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--pte-text);
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.evolveList li {
+  margin-bottom: 0.45rem;
+}
+
+.evolveList li:last-child {
+  margin-bottom: 0;
+}
+
+.evolveNote {
+  margin: 0.9rem 0 0;
+  color: var(--pte-text-muted);
+  font-style: italic;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Program alignment section */
+.alignSection {
+  margin-top: 2.25rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--pte-border);
+  text-align: center;
+}
+
+.alignTitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+}
+
+.alignIntro {
+  margin: 0 auto 1.25rem;
+  color: var(--pte-text-muted);
+  line-height: 1.75;
+  font-size: 1rem;
+  max-width: 900px;
+}
+
+.alignGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 1.1rem;
+  text-align: left;
+}
+
+@media (max-width: 980px) {
+  .alignGrid {
+    grid-template-columns: repeat(3, 340px);
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .alignCard {
+    scroll-snap-align: start;
+  }
+
+  .alignGrid::-webkit-scrollbar {
+    height: 10px;
+  }
+  .alignGrid::-webkit-scrollbar-track {
+    background: rgba(19, 46, 74, 0.08);
+    border-radius: 999px;
+  }
+  .alignGrid::-webkit-scrollbar-thumb {
+    background: rgba(198, 164, 55, 0.45);
+    border-radius: 999px;
+  }
+}
+
+.alignCard {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1.15rem 1.15rem 1.05rem;
+}
+
+.alignH3 {
+  margin: 0 0 0.55rem;
+  color: var(--pte-navy);
+  font-weight: 900;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+}
+
+.alignP {
+  margin: 0;
+  color: var(--pte-text-muted);
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.progressionNote {
+  margin: 1.2rem auto 0;
+  max-width: 900px;
+  color: var(--pte-text-muted);
+  line-height: 1.75;
+  font-size: 0.98rem;
+}
+
+.disclaimer {
+  margin-top: 1.25rem;
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  color: var(--pte-text-muted);
+  line-height: 1.75;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 860px) {
+  .page {
+    padding: 3rem 0 4rem;
+  }
+}

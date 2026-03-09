@@ -1,0 +1,94 @@
+/* src/app/(marketing)/programs/intermediate/intermediate.module.css */
+
+.page {
+  background: var(--bg);
+  color: var(--text);
+  padding: 4.25rem 0 4.75rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  font-weight: 900;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  max-width: 880px;
+  line-height: 1.75;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 2.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--navy);
+}
+
+.paragraph {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* List */
+.list {
+  padding-left: 1.2rem;
+  margin: 0;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.list li {
+  margin-bottom: 0.6rem;
+}
+
+/* Footer */
+.footer {
+  margin-top: 2.25rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.4rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 900;
+  border: 1px solid transparent;
+  transition: opacity 0.2s ease, transform 0.08s ease;
+}
+
+.btn:hover {
+  opacity: 0.97;
+  transform: translateY(-1px);
+}
+
+.btnGold {
+  background: var(--gold);
+  color: #141414;
+  border-color: rgba(0, 0, 0, 0.12);
+}

@@ -1,0 +1,209 @@
+/* src/app/(marketing)/resources/tools/trade-viability-checker/trade-viability-checker.module.css */
+
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 4rem 0 5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.kicker {
+  margin: 0 0 0.6rem;
+  color: var(--pte-text-muted);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.title {
+  margin: 0 0 0.9rem;
+  color: var(--pte-navy);
+  font-weight: 900;
+  font-size: clamp(2rem, 2.8vw, 2.7rem);
+  letter-spacing: -0.02em;
+}
+
+.intro {
+  margin: 0 auto;
+  max-width: 90ch;
+  color: var(--pte-text-muted);
+  line-height: 1.75;
+}
+
+.panel {
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  border-radius: 16px;
+  padding: 1.35rem 1.35rem 1.1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.h2 {
+  margin: 0 0 0.75rem;
+  color: var(--pte-gold);
+  font-weight: 900;
+  font-size: 1.15rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1.1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.label {
+  color: var(--pte-navy);
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.input {
+  padding: 0.78rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid var(--pte-border);
+  background: var(--pte-white);
+  color: var(--pte-text);
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(198, 164, 55, 0.7);
+  box-shadow: 0 0 0 3px rgba(198, 164, 55, 0.18);
+}
+
+.result {
+  margin-top: 1.25rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--pte-border);
+}
+
+.resultRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 0.35rem;
+}
+
+.resultLabel {
+  color: var(--pte-text-muted);
+  font-weight: 800;
+}
+
+.resultValue {
+  color: var(--pte-text);
+  font-weight: 900;
+}
+
+.resultValueGold {
+  color: var(--pte-gold);
+  font-weight: 900;
+}
+
+.verdictWrap {
+  margin-top: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  background: var(--pte-white);
+  border: 1px solid var(--pte-border);
+}
+
+.verdictLabel {
+  font-weight: 900;
+  color: var(--pte-navy);
+}
+
+.verdict {
+  font-weight: 900;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+}
+
+.pass {
+  background: rgba(46, 204, 113, 0.12);
+  border-color: rgba(46, 204, 113, 0.25);
+  color: #1f6f3b;
+}
+
+.caution {
+  background: rgba(198, 164, 55, 0.14);
+  border-color: rgba(198, 164, 55, 0.28);
+  color: #6a560f;
+}
+
+.reject {
+  background: rgba(231, 76, 60, 0.12);
+  border-color: rgba(231, 76, 60, 0.25);
+  color: #7a1f18;
+}
+
+.note {
+  margin: 0.85rem 0 0;
+  color: var(--pte-text-muted);
+  line-height: 1.7;
+}
+
+.actions {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: center;
+}
+
+.secondaryBtn {
+  text-decoration: none;
+  color: var(--pte-navy);
+  border: 1px solid var(--pte-navy);
+  background: transparent;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.95rem;
+}
+
+.secondaryBtn:hover {
+  background: var(--pte-navy);
+  color: var(--pte-white);
+}
+
+.disclaimer {
+  margin: 1rem 0 0;
+  text-align: center;
+  color: var(--pte-text-muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .verdictWrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+}

@@ -1,0 +1,53 @@
+/* src/app/quiz/[quizId]/quiz.module.css */
+.shell { display: flex; }
+.main { flex: 1; padding: 24px 28px; }
+.h1 { margin: 0; font-size: 34px; }
+.sub { margin-top: 6px; color: var(--muted); }
+.card { margin-top: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(16,24,40,0.06); max-width: 860px; }
+.qTop { font-weight: 800; margin-bottom: 10px; }
+.q { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+.opt { display: flex; gap: 10px; align-items: flex-start; padding: 10px 8px; border-radius: 12px; border: 1px solid rgba(16,24,40,0.08); margin-bottom: 10px; }
+.btn { width: 100%; margin-top: 10px; background: var(--primary); border: none; color: #fff; font-weight: 800; padding: 12px 14px; border-radius: 12px; cursor: pointer; text-decoration: none; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.back { display: inline-block; margin-top: 12px; color: var(--muted); text-decoration: none; }
+.back:hover { text-decoration: underline; }
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btnRow {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.btnSecondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text, #111);
+}
+
+.btnPrimary {
+  background: var(--primary);
+  border: none;
+  color: #fff;
+}
+
+.btnSecondary:disabled,
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabledBtn {
+  opacity: 0.5;
+  pointer-events: none;
+}

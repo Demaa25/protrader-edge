@@ -1,0 +1,128 @@
+/* src/app/(marketing)/faqs/faqs.module.css */
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 3.75rem 0 4.5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Title */
+.hero {
+  text-align: center;
+  margin-bottom: 1.35rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.1rem, 3.2vw, 3rem);
+  color: var(--pte-navy);
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+/* Accordion container */
+.accordion {
+  max-width: 980px;
+  margin: 0 auto;
+  border: 1px solid var(--pte-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--pte-bg-soft);
+}
+
+/* Item divider */
+.item {
+  border-top: 1px solid var(--pte-border);
+}
+.item:first-child {
+  border-top: none;
+}
+
+/* Question row */
+.questionRow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1rem 1.25rem;
+  border: none;
+  background: transparent;
+  color: var(--pte-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.questionRow:hover {
+  background: rgba(198, 164, 55, 0.08);
+}
+
+.questionText {
+  font-size: 1.02rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: var(--pte-navy);
+}
+
+.qIndex {
+  color: var(--pte-gold);
+  margin-right: 0.35rem;
+}
+
+/* Plus / minus */
+.icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--pte-border);
+  color: var(--pte-navy);
+  font-size: 1.25rem;
+  flex: 0 0 auto;
+  background: #fff;
+}
+
+/* Answer animation */
+.answerWrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 220ms ease;
+}
+
+.open {
+  max-height: 320px;
+}
+
+.answerInner {
+  padding: 0 1.25rem 1.15rem;
+}
+
+.answer {
+  margin: 0;
+  color: var(--pte-text);
+  line-height: 1.75;
+  font-size: 0.98rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .questionRow {
+    padding: 0.95rem 1rem;
+  }
+  .answerInner {
+    padding: 0 1rem 1rem;
+  }
+  .icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+  }
+}

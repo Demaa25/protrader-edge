@@ -1,0 +1,147 @@
+/* src/app/(marketing)/resources/tools/tools.module.css */
+
+.page {
+  background: var(--pte-bg);
+  color: var(--pte-text);
+  padding: 4rem 0 5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.1rem, 3vw, 2.8rem);
+  font-weight: 800;
+  color: var(--pte-navy);
+  letter-spacing: -0.02em;
+}
+
+.intro {
+  margin: 0.85rem auto 0;
+  max-width: 70ch;
+  color: var(--pte-text-muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+/*
+  8-column grid:
+  - Row 1: 4 cards, each spans 2 columns (4*2=8)
+  - Row 2: 3 cards, each spans 2 columns, starting at columns 2,4,6
+    -> leaves col 1 and col 8 empty => centered row
+*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.75rem;
+}
+
+.card {
+  grid-column: span 2;
+
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 1.2rem 1.2rem;
+  border-radius: 14px;
+  background: var(--pte-bg-soft);
+  border: 1px solid var(--pte-border);
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+
+  min-height: 180px;
+}
+
+.card:hover {
+  background: #fbfcff;
+  border-color: rgba(198, 164, 55, 0.55);
+  transform: translateY(-3px);
+}
+
+.cardTop {
+  min-width: 0;
+}
+
+.cardTitle {
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--pte-navy);
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.cardDesc {
+  margin-top: 0.5rem;
+  color: var(--pte-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.cardCta {
+  color: var(--pte-gold);
+  font-weight: 900;
+  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+.arrow {
+  display: inline-block;
+  transform: translateY(1px);
+}
+
+/* Center the 2nd row (items 5–7) by offsetting their start columns */
+.card:nth-child(5) {
+  grid-column: 2 / span 2;
+}
+.card:nth-child(6) {
+  grid-column: 4 / span 2;
+}
+.card:nth-child(7) {
+  grid-column: 6 / span 2;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .card {
+    grid-column: span 2;
+  }
+
+  .card:nth-child(5),
+  .card:nth-child(6),
+  .card:nth-child(7) {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .card:nth-child(5),
+  .card:nth-child(6),
+  .card:nth-child(7) {
+    grid-column: auto;
+  }
+}

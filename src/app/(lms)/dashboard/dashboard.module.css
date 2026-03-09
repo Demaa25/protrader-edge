@@ -1,0 +1,100 @@
+/* src/app/dashboard/dashboard.module.css */
+
+.shell {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: 24px 28px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.h1 {
+  margin: 0;
+  font-size: 34px;
+}
+
+.p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+}
+
+.cardTitle {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.continueRow {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.thumb {
+  width: 140px;
+  height: 78px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.meta {
+  flex: 1;
+}
+
+.courseTitle {
+  font-weight: 800;
+}
+
+.courseSub {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.progressBar {
+  margin-top: 10px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(16, 24, 40, 0.08);
+  overflow: hidden;
+}
+
+.progressBar span {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+}
+
+.btn {
+  text-decoration: none;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+}

@@ -1,0 +1,121 @@
+/* src/app/my-courses/my-courses.module.css */
+
+.shell { display: flex; }
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: 24px 28px;
+}
+
+.h1 { margin: 0 0 6px; font-size: 34px; }
+.sub { margin: 0 0 18px; color: var(--muted); }
+
+.list {
+  display: grid;
+  gap: 14px;
+  max-width: 980px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(16,24,40,0.06);
+
+  display: grid;
+  grid-template-columns: 180px 1fr 160px;
+  gap: 14px;
+  align-items: center;
+}
+
+.thumb {
+  height: 100px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.info { display: grid; gap: 6px; }
+
+.title { font-weight: 900; font-size: 18px; }
+.meta { color: var(--muted); }
+
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(16,24,40,0.08);
+  overflow: hidden;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+}
+
+.progressDone {
+  display: block;
+  height: 100%;
+  background: #22c55e;
+}
+
+.percent { width: 50px; text-align: right; color: var(--muted); font-weight: 700; }
+
+.cta {
+  justify-self: end;
+  text-decoration: none;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  padding: 10px 14px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.completedBtn {
+  justify-self: end;
+  text-decoration: none;
+  background: #1f5eff;
+  color: #fff;
+  font-weight: 800;
+  padding: 10px 14px;
+  border-radius: 12px;
+  text-align: center;
+  opacity: 0.95;
+}
+
+.empty {
+  max-width: 720px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(16,24,40,0.06);
+}
+
+.emptyTitle { font-weight: 900; margin-bottom: 6px; }
+.emptyText { color: var(--muted); margin-bottom: 12px; }
+
+.primary {
+  display: inline-block;
+  text-decoration: none;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
