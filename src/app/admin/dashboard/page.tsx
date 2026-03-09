@@ -7,7 +7,7 @@ import { getSession } from "@/lib/session";
 
 export default async function AdminDashboardPage() {
   const session = await getSession();
-  // @ts-expect-error role exists
+  
   const role = (session?.user as any)?.role as "ADMIN" | "LEARNER" | undefined;
 
   return (
