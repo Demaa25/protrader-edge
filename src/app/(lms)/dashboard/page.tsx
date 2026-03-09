@@ -11,10 +11,10 @@ export default async function DashboardPage() {
   const session = await getSession();
   if (!session?.user) redirect("/login");
 
-  // @ts-expect-error custom fields exist
+  
   const role = (session.user as any)?.role as "ADMIN" | "LEARNER" | undefined;
 
-  // @ts-expect-error id exists
+  
   const userId = (session.user as any)?.id as string | undefined;
   if (!userId) redirect("/login");
 

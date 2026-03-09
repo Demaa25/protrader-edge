@@ -38,9 +38,9 @@ export default async function CoursePage(props: {
   const session = await getSession();
   if (!session?.user) redirect("/login");
 
-  // @ts-expect-error role exists
+  
   const role = (session.user as any)?.role as "ADMIN" | "STUDENT" | "LEARNER" | undefined;
-  // @ts-expect-error id exists
+  
   const userId = (session.user as any)?.id as string | undefined;
   if (!userId) redirect("/login");
 

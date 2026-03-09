@@ -12,7 +12,7 @@ export default async function WelcomePage() {
   const session = await getSession();
   if (!session?.user) redirect("/login");
 
-  // @ts-expect-error id exists on session.user via your next-auth callback
+  
   const userId = (session.user as any).id as string | undefined;
   const name = session.user.name ?? "Trader";
 

@@ -25,7 +25,6 @@ async function loadPdfJs(): Promise<PdfJs> {
   const pdfjs = await import("pdfjs-dist/build/pdf");
 
   // ✅ bundle worker via Next (no CDN, no fake worker)
-  // @ts-expect-error pdfjs typing differs across versions
   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.mjs",
     import.meta.url

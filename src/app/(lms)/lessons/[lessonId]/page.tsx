@@ -48,9 +48,9 @@ export default async function LessonPage(props: { params: ParamsLike }) {
   const session = await getSession();
   if (!session?.user) redirect("/login");
 
-  // @ts-expect-error custom fields exist in session
+  
   const userId = (session.user as any)?.id as string | undefined;
-  // @ts-expect-error role exists
+  
   const role = (session.user as any)?.role as "ADMIN" | "STUDENT" | undefined;
   if (!userId) redirect("/login");
 
@@ -160,7 +160,7 @@ export default async function LessonPage(props: { params: ParamsLike }) {
     if (!rawLessonId) return;
 
     const s = await getSession();
-    // @ts-expect-error custom fields exist
+    
     const uid = (s?.user as any)?.id as string | undefined;
     if (!uid) redirect("/login");
 
