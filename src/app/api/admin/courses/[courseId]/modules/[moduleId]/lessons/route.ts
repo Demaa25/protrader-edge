@@ -1,7 +1,8 @@
 // src/app/api/admin/modules/[moduleId]/lessons/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { authOptions } from "@/auth";
+import { getServerSession } from "next-auth";
 
 export async function POST(
   req: Request,
@@ -9,7 +10,7 @@ export async function POST(
 ) {
   const { moduleId } = await ctx.params;
 
-  const session = await auth();
+  const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json().catch(() => ({}));

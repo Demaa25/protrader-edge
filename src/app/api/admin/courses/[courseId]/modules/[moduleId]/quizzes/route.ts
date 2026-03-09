@@ -1,11 +1,12 @@
 // src/app/api/admin/courses/[courseId]/modules/[moduleId]/quizzes/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
+import { authOptions } from "@/auth";
+import { getServerSession } from "next-auth";
 import { EvaluationType } from "@prisma/client";
 
 export async function POST(req: Request, ctx: { params: Promise<{ moduleId: string }> }) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   // @ts-expect-error custom field exists
