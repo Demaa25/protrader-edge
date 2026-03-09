@@ -13,7 +13,7 @@ async function requireAdmin() {
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string } }
+  ctx: { params: Promise<{ courseId: string }> }
 ) {
   const session = await requireAdmin();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
