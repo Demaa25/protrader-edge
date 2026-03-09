@@ -72,7 +72,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className={styles.header} ref={(el) => (rootRef.current = el)}>
+    <header className={styles.header} ref={(el) => { rootRef.current = el; }}>
       <div className={styles.inner}>
         <Link href="/" className={styles.brand} aria-label="ProTrader Edge home">
           <span className={styles.logoWrap} aria-hidden="true">
