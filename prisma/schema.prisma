@@ -196,6 +196,8 @@ model LessonProgress {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  progress Int @default(0) // percentage or any other metric you prefer
+
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
