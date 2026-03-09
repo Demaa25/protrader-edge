@@ -16,7 +16,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // @ts-expect-error custom field exists in your session
+    
     const userId = (session.user as any)?.id as string | undefined;
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

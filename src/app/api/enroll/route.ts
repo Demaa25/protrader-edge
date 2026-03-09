@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
   const { courseId } = (await req.json()) as { courseId: string };
 
-  // @ts-expect-error id exists
+  
   const userId = session.user.id as string;
 
   await prisma.enrollment.upsert({

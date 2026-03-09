@@ -20,7 +20,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ assessmentId: 
     const session = await getSession();
     if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    // @ts-expect-error
+    
     const userId = (session.user as any)?.id as string | undefined;
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 

@@ -10,9 +10,9 @@ export async function GET(_req: Request, ctx: { params: Promise<{ lessonId: stri
 
   const session = await getSession();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  // @ts-expect-error
+  
   const userId = (session.user as any)?.id as string | undefined;
-  // @ts-expect-error
+  
   const role = (session.user as any)?.role as "ADMIN" | "STUDENT" | undefined;
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 

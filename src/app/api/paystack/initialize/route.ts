@@ -33,7 +33,7 @@ export async function GET(req: Request) {
     const session = await getSession();
     if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    // @ts-expect-error custom field
+    
     const userId = (session.user as any).id as string | undefined;
     const email = session.user.email;
     if (!userId || !email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

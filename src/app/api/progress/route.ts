@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     progress?: number;
   };
 
-  // @ts-expect-error id exists
+  
   const userId = session.user.id as string;
 
   await prisma.lessonProgress.upsert({

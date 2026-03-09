@@ -12,7 +12,7 @@ export async function GET(
   const session = await getSession();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  // @ts-expect-error custom field
+  
   const role = (session.user as any)?.role as string | undefined;
   if (role !== "ADMIN") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
@@ -110,7 +110,7 @@ export async function POST(
   const session = await getSession();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  // @ts-expect-error custom field
+  
   const role = (session.user as any)?.role as string | undefined;
   if (role !== "ADMIN") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 

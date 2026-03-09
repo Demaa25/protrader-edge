@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { courseId } = (await req.json()) as { courseId: string };
-  // @ts-expect-error id exists
+  
   const userId = session.user.id as string;
 
   // TODO: enforce completion rules (all lessons completed + quiz submitted, etc.)
