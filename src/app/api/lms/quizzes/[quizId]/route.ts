@@ -5,12 +5,12 @@ import { getSession } from "@/lib/session";
 
 export async function GET(
   _req: Request,
-  { params }: { params: { quizId: string } }
+  ctx: { params: Promise<{ quizId: string }> }
 ) {
   const session = await getSession();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const quizId = params.quizId;
+  const { quizId } = await ctx.params;
 
   const evaluation = await prisma.evaluation.findUnique({
     where: { id: quizId },
