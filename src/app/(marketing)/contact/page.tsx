@@ -21,13 +21,13 @@ export default function ContactPage() {
 
             <div className={styles.emails}>
               <p>
-                <strong>General:</strong> info@protraderdge.com
+                <strong>General:</strong> info@protrader-edge.com
               </p>
               <p>
-                <strong>Support:</strong> support@protraderdge.com
+                <strong>Support:</strong> support@protrader-edge.com
               </p>
               <p>
-                <strong>Partnerships:</strong> partnerships@protraderdge.com
+                <strong>Partnerships:</strong> partnerships@protrader-edge.com
               </p>
             </div>
 

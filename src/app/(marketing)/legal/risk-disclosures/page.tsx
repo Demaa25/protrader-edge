@@ -89,7 +89,7 @@ export default function RiskDisclosurePage() {
             <section className={styles.block}>
               <h2 className={styles.h2}>9. Contact Information</h2>
               <p className={styles.p}>For questions regarding these disclosures, contact:</p>
-              <p className={styles.p}>Email:&nbsp;support@protraderdge.com</p>
+              <p className={styles.p}>Email:&nbsp;support@protrader-edge.com</p>
               <p className={styles.p}>
                 Business Address:&nbsp;Umuekeugo-Ogbor Uvuru, Aboh-Mbaise, Imo State, Nigeria
               </p>

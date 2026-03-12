@@ -55,7 +55,7 @@ export default function RefundPolicyPage() {
             <section className={styles.block}>
               <h2 className={styles.h2}>4. Refund Request Process</h2>
               <p className={styles.p}>To request a refund (where applicable), contact:</p>
-              <p className={styles.p}>Email:&nbsp;support@protraderdge.com</p>
+              <p className={styles.p}>Email:&nbsp;support@protrader-edge.com</p>
               <p className={styles.p}>
                 Include your name, email used for purchase, product name, and reason for the
                 request. Requests are reviewed within 5–10 business days.

@@ -161,7 +161,7 @@ export default function LegalCompliancePage() {
             <section className={styles.block}>
               <h2 className={styles.h2}>10. Contact Information</h2>
               <p className={styles.p}>For questions, support, or complaints, contact:</p>
-              <p className={styles.p}>Email: info@protraderdge.com</p>
+              <p className={styles.p}>Email: info@protrader-edge.com</p>
               <p className={styles.p}>
                 Business Address: Umuekeugo Ogbor, Uvuru Aboh-Mbaise, Imo State, Nigeria
               </p>

@@ -15,7 +15,6 @@
   display: flex;
   flex-direction: column;
 }
-/* Add to src/app/settings/settings.module.css */
 
 .err {
   color: #b42318;

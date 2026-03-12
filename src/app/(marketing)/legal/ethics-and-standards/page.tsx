@@ -133,7 +133,7 @@ export default function EthicsStandardsPage() {
               <p className={styles.p}>
                 Questions regarding ethics or professional standards may be directed to:
               </p>
-              <p className={styles.p}>Email:&nbsp;support@protraderdge.com</p>
+              <p className={styles.p}>Email:&nbsp;support@protrader-edge.com</p>
             </section>
           </div>
         </section>

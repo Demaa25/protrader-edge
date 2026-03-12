@@ -126,7 +126,7 @@ export default function PrivacyPolicyPage() {
                 <li>Object to certain processing activities</li>
                 <li>Request data portability</li>
               </ul>
-              <p className={styles.p}>Requests may be submitted to: support@protraderdge.com</p>
+              <p className={styles.p}>Requests may be submitted to: support@protrader-edge.com</p>
             </section>
 
             <section className={styles.block}>
@@ -158,7 +158,7 @@ export default function PrivacyPolicyPage() {
               <p className={styles.p}>
                 For privacy-related inquiries or data requests, contact:
               </p>
-              <p className={styles.p}>Email: support@protraderdge.com</p>
+              <p className={styles.p}>Email: support@protrader-edge.com</p>
               <p className={styles.p}>
                 Business Address: Umuekeugo-Ogbor Uvuru, Aboh-Mbaise, Imo State, Nigeria.
               </p>
