@@ -47,36 +47,29 @@ function isActivePath(pathname: string, href?: string) {
 export default function Navbar() {
   const pathname = usePathname();
   const [openKey, setOpenKey] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const rootRef = useRef<HTMLElement | null>(null);
 
-  // Close dropdown on route change
   useEffect(() => setOpenKey(null), [pathname]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (!rootRef.current) return;
-      if (!rootRef.current.contains(e.target as Node)) setOpenKey(null);
+      if (!rootRef.current.contains(e.target as Node)) {
+        setOpenKey(null);
+        setMobileOpen(false);
+      }
     }
     document.addEventListener("mousedown", onDocClick);
     return () => document.removeEventListener("mousedown", onDocClick);
   }, []);
 
-  // Close dropdown on ESC
-  useEffect(() => {
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpenKey(null);
-    }
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, []);
-
   return (
-    <header className={styles.header} ref={(el) => { rootRef.current = el; }}>
+    <header className={styles.header} ref={(el) => { rootRef.current = el }}>
       <div className={styles.inner}>
-        <Link href="/" className={styles.brand} aria-label="ProTrader Edge home">
-          <span className={styles.logoWrap} aria-hidden="true">
-            {/* CHANGE THIS PATH TO YOUR REAL ROUND LOGO FILE IN /public */}
+
+        <Link href="/" className={styles.brand}>
+          <span className={styles.logoWrap}>
             <Image
               src="/PTE Logo_2.png"
               alt=""
@@ -86,53 +79,43 @@ export default function Navbar() {
               priority
             />
           </span>
-
           <span className={styles.brandText}>
             ProTrader <span>Edge</span>
           </span>
         </Link>
 
-        <nav className={styles.nav} aria-label="Primary navigation">
+        <button
+          className={styles.mobileToggle}
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          ☰
+        </button>
+
+        <nav
+          className={`${styles.nav} ${mobileOpen ? styles.mobileNavOpen : ""}`}
+        >
           {navItems.map((item) => {
             const key = item.label.toLowerCase();
             const isOpen = openKey === key;
 
             if (item.dropdown) {
-              const parentActive =
-                isActivePath(pathname, item.href) ||
-                item.dropdown.some((d) => isActivePath(pathname, d.href));
-
               return (
-                <div
-                  key={item.label}
-                  className={styles.dropdown}
-                  onMouseEnter={() => setOpenKey(key)}
-                  onMouseLeave={() => setOpenKey(null)}
-                >
-                  <Link
-                    href={item.href!}
-                    className={`${styles.navLink} ${parentActive ? styles.active : ""}`}
-                    aria-haspopup="menu"
-                    aria-expanded={isOpen}
+                <div key={item.label} className={styles.dropdown}>
+                  <button
+                    className={styles.navLink}
+                    onClick={() => setOpenKey(isOpen ? null : key)}
                   >
-                    {item.label}
-                    <span className={styles.caret} aria-hidden="true">
-                      ▾
-                    </span>
-                  </Link>
+                    {item.label} <span className={styles.caret}>▾</span>
+                  </button>
 
                   <div
                     className={`${styles.menu} ${isOpen ? styles.menuOpen : ""}`}
-                    role="menu"
                   >
                     {item.dropdown.map((d) => (
                       <Link
                         key={d.href}
                         href={d.href}
-                        className={`${styles.menuItem} ${
-                          isActivePath(pathname, d.href) ? styles.menuItemActive : ""
-                        }`}
-                        role="menuitem"
+                        className={styles.menuItem}
                       >
                         {d.label}
                       </Link>
@@ -146,19 +129,27 @@ export default function Navbar() {
               <Link
                 key={item.label}
                 href={item.href!}
-                className={`${styles.navLink} ${isActivePath(pathname, item.href) ? styles.active : ""}`}
+                className={styles.navLink}
               >
                 {item.label}
               </Link>
             );
           })}
+
+          <div className={styles.mobileButtons}>
+            <Link href="/register" className={styles.signup}>
+              Sign Up
+            </Link>
+            <Link href="/login" className={styles.login}>
+              Login
+            </Link>
+          </div>
         </nav>
 
         <div className={styles.right}>
           <Link href="/register" className={styles.signup}>
             Sign Up
           </Link>
-
           <Link href="/login" className={styles.login}>
             Login
           </Link>

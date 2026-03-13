@@ -227,3 +227,61 @@
     transform: none;
   }
 }
+
+.mobileToggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: white;
+  cursor: pointer;
+}
+
+.mobileButtons {
+  display: none;
+}
+
+@media (max-width: 920px) {
+
+  .inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .mobileToggle {
+    display: block;
+  }
+
+  .nav {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(11,18,32,0.98);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 16px;
+    display: none;
+  }
+
+  .mobileNavOpen {
+    display: flex;
+  }
+
+  .right {
+    display: none;
+  }
+
+  .mobileButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .signup,
+  .login {
+    width: 100%;
+    text-align: center;
+  }
+}
