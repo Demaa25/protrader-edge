@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { sendEmail } from "@/lib/email";
+import { welcomeEmail } from "@/lib/emailTemplates/welcome";
 
 export async function POST(req: Request) {
   try {
@@ -51,6 +53,12 @@ export async function POST(req: Request) {
         privacyAcceptedAt: acceptedPrivacyPolicy ? new Date() : null,
       },
     });
+
+    await sendEmail(
+      email,
+      "Welcome to ProTrader Edge!",
+      welcomeEmail(name)
+    );
 
     return NextResponse.json({ ok: true }, { status: 201 });
   } catch {
