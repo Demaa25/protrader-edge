@@ -21,7 +21,7 @@ export function welcomeEmail(name: string) {
     border-radius: 6px;
     font-weight: bold;
     ">
-     Go to Dashboard
+     Login to Your Account
     </a>
 
     <p style="margin-top: 20px">If you did not create this account, please ignore this email.</p>
