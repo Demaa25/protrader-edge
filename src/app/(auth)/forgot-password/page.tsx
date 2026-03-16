@@ -1,5 +1,7 @@
 // src/app/(auth)/forgot-password/page.tsx
 "use client";
+import { Link } from "lucide-react";
+import Image from "next/image";
 import styles from "./forgot.module.css";
 import { useState } from "react";
 
@@ -20,7 +22,21 @@ export default function ForgotPasswordPage() {
   return (
     <main className={styles.wrap}>
       <div className={styles.card}>
-        <div className={styles.brand}>ProTrader <span>Edge</span></div>
+        {/* Brand centered + logo */}
+        <Link href="/" className={styles.brandWrap}>
+          {/* Put your logo file in /public and reference it like below */}
+          <Image
+            src="/PTE Logo_2.png"
+            alt="ProTrader Edge Logo"
+            width={46}
+            height={46}
+            className={styles.logo}
+            priority
+          />
+          <div className={styles.brand}>
+            ProTrader <span>Edge</span>
+          </div>
+        </Link>
         <h1 className={styles.h1}>Forgot Password?</h1>
         <p className={styles.p}>Enter your email to reset your password.</p>
 
