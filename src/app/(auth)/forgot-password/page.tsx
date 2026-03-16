@@ -1,4 +1,4 @@
-// src/app/forgot-password/page.tsx
+// src/app/(auth)/forgot-password/page.tsx
 "use client";
 import styles from "./forgot.module.css";
 import { useState } from "react";
@@ -9,7 +9,11 @@ export default function ForgotPasswordPage() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // TODO: wire up email reset flow
+    await fetch("/api/auth/forgot-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
     setSent(true);
   }
 
@@ -25,7 +29,7 @@ export default function ForgotPasswordPage() {
           <button className={styles.btn} type="submit">Reset Password</button>
         </form>
 
-        {sent && <div className={styles.note}>If the email exists, you&apos;ll receive reset instructions.</div>}
+        {sent && <div className={styles.note}>A password reset link has been sent to your email.</div>}
         <a className={styles.link} href="/login">Back to Login</a>
       </div>
     </main>

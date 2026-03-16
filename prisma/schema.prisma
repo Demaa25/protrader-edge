@@ -455,3 +455,16 @@ model Installment {
   @@unique([purchaseId, installmentNo])
   @@index([purchaseId])
 }
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+
+  used      Boolean  @default(false)
+  expired   Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+}
