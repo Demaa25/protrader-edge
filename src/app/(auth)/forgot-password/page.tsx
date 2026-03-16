@@ -1,6 +1,6 @@
 // src/app/(auth)/forgot-password/page.tsx
 "use client";
-import { Link } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 import styles from "./forgot.module.css";
 import { useState } from "react";
