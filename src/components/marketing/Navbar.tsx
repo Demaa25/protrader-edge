@@ -38,20 +38,19 @@ const navItems: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-function isActivePath(pathname: string, href?: string) {
-  if (!href) return false;
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(href + "/");
-}
-
 export default function Navbar() {
   const pathname = usePathname();
   const [openKey, setOpenKey] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const rootRef = useRef<HTMLElement | null>(null);
 
-  useEffect(() => setOpenKey(null), [pathname]);
+  // close dropdowns on route change
+  useEffect(() => {
+    setOpenKey(null);
+    setMobileOpen(false);
+  }, [pathname]);
 
+  // close on outside click
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (!rootRef.current) return;
@@ -60,15 +59,17 @@ export default function Navbar() {
         setMobileOpen(false);
       }
     }
+
     document.addEventListener("mousedown", onDocClick);
     return () => document.removeEventListener("mousedown", onDocClick);
   }, []);
 
   return (
-    <header className={styles.header} ref={(el) => { rootRef.current = el }}>
+    <header className={styles.header} ref={(el) => (rootRef.current = el)}>
       <div className={styles.inner}>
 
-        <Link href="/" className={styles.brand}>
+        {/* BRAND */}
+        <Link href="/" className={styles.brand} onClick={() => setMobileOpen(false)}>
           <span className={styles.logoWrap}>
             <Image
               src="/PTE Logo_2.png"
@@ -79,11 +80,13 @@ export default function Navbar() {
               priority
             />
           </span>
+
           <span className={styles.brandText}>
             ProTrader <span>Edge</span>
           </span>
         </Link>
 
+        {/* MOBILE MENU BUTTON */}
         <button
           className={styles.mobileToggle}
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -91,9 +94,9 @@ export default function Navbar() {
           ☰
         </button>
 
-        <nav
-          className={`${styles.nav} ${mobileOpen ? styles.mobileNavOpen : ""}`}
-        >
+        {/* NAV */}
+        <nav className={`${styles.nav} ${mobileOpen ? styles.mobileNavOpen : ""}`}>
+
           {navItems.map((item) => {
             const key = item.label.toLowerCase();
             const isOpen = openKey === key;
@@ -101,25 +104,31 @@ export default function Navbar() {
             if (item.dropdown) {
               return (
                 <div key={item.label} className={styles.dropdown}>
+
                   <button
                     className={styles.navLink}
                     onClick={() => setOpenKey(isOpen ? null : key)}
                   >
-                    {item.label} <span className={styles.caret}>▾</span>
+                    {item.label}
+                    <span className={styles.caret}>▾</span>
                   </button>
 
-                  <div
-                    className={`${styles.menu} ${isOpen ? styles.menuOpen : ""}`}
-                  >
+                  <div className={`${styles.menu} ${isOpen ? styles.menuOpen : ""}`}>
+
                     {item.dropdown.map((d) => (
                       <Link
                         key={d.href}
                         href={d.href}
                         className={styles.menuItem}
+                        onClick={() => {
+                          setMobileOpen(false);
+                          setOpenKey(null);
+                        }}
                       >
                         {d.label}
                       </Link>
                     ))}
+
                   </div>
                 </div>
               );
@@ -130,6 +139,10 @@ export default function Navbar() {
                 key={item.label}
                 href={item.href!}
                 className={styles.navLink}
+                onClick={() => {
+                  setMobileOpen(false);
+                  setOpenKey(null);
+                }}
               >
                 {item.label}
               </Link>
@@ -137,23 +150,28 @@ export default function Navbar() {
           })}
 
           <div className={styles.mobileButtons}>
-            <Link href="/register" className={styles.signup}>
+            <Link href="/register" className={styles.signup} onClick={() => setMobileOpen(false)}>
               Sign Up
             </Link>
-            <Link href="/login" className={styles.login}>
+
+            <Link href="/login" className={styles.login} onClick={() => setMobileOpen(false)}>
               Login
             </Link>
           </div>
+
         </nav>
 
+        {/* DESKTOP BUTTONS */}
         <div className={styles.right}>
           <Link href="/register" className={styles.signup}>
             Sign Up
           </Link>
+
           <Link href="/login" className={styles.login}>
             Login
           </Link>
         </div>
+
       </div>
     </header>
   );
