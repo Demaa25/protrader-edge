@@ -65,7 +65,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className={styles.header} ref={(el) => (rootRef.current = el)}>
+    <header className={styles.header} ref={(el) => { rootRef.current = el }}>
       <div className={styles.inner}>
 
         {/* BRAND */}
