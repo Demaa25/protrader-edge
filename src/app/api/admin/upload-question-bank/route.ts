@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       columns: true,
       skip_empty_lines: true,
       trim: true,
-    }); as CsvRow[];
+    }) as CsvRow[];
 
     // ===============================
     // 1. GROUP BANKS
