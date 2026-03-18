@@ -12,15 +12,15 @@ export function Bottombar() {
       </div>
 
       <div className={styles.right}>
-        <Link href="/terms" className={styles.link}>
+        <Link href="/legal/terms-of-use" className={styles.link}>
           Terms of Use
         </Link>
 
-        <Link href="/privacy" className={styles.link}>
+        <Link href="/legal/privacy-policy" className={styles.link}>
           Privacy Policy
         </Link>
 
-        <Link href="/refund-policy" className={styles.link}>
+        <Link href="/legal/refund-policy" className={styles.link}>
           Refund Policy
         </Link>
       </div>

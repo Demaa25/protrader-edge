@@ -14,6 +14,7 @@ import {
   Shield,
   Users,
   BookOpen,
+  PlusCircle,
 } from "lucide-react";
 
 type Role = "ADMIN" | "LEARNER";
@@ -110,6 +111,13 @@ export function Sidebar({ role }: { role?: Role }) {
               label="Users"
               active={isActive("/admin/users")}
               icon={<Users size={18} />}
+            />
+
+            <NavItem
+              href="/admin/upload-question-bank"
+              label="Question Banks"
+              active={isActive("/admin/upload-question-bank")}
+              icon={<PlusCircle size={18} />}
             />
           </>
         )}
