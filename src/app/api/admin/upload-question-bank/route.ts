@@ -5,6 +5,21 @@ import { parse } from "csv-parse/sync";
 import { BankType, EvaluationType } from "@prisma/client";
 
 type ScopeType = "LESSON" | "MODULE" | "COURSE";
+type CsvRow = {
+  courseId: string;
+  bankName: string;
+  bankType: string;
+  evaluationType: string;
+  scopeType: string;
+  scopeOrder: string;
+  question: string;
+  labelA: string;
+  labelB: string;
+  labelC: string;
+  labelD: string;
+  isCorrect: string;
+  explanation?: string;
+};
 
 function normalizeCorrect(x: string) {
   const v = (x ?? "").trim().toUpperCase();
