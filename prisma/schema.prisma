@@ -31,6 +31,7 @@ model User {
   enrollments    Enrollment[]
   lessonProgress LessonProgress[]
   certificates   Certificate[]
+  scenarios      ScenarioSubmission[]
 
   // NEW (payments)
   purchases Purchase[]
@@ -86,7 +87,7 @@ model Course {
   category     String  @default("Forex")
   description  String?
   thumbnailUrl String?
-  published    Boolean @default(false)
+  published    Boolean @default(true)
 
   priceKobo Int @default(0)
 
@@ -129,28 +130,43 @@ model Lesson {
   id        String   @id @default(cuid())
   moduleId  String
   title     String
-  content   String?
-  videoUrl  String?
   order     Int
+
+  module Module @relation(fields: [moduleId], references: [id])
+
+  blocks LessonBlock[]
+  progresses LessonProgress[]
+  materials LessonMaterial[]
+  evaluations Evaluation[]
+  scenarios Scenario?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
 
-  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+model LessonBlock {
+  id       String @id @default(cuid())
+  lessonId String
 
-  progresses LessonProgress[]
+  type     LessonBlockType
+  content  String? @db.Text
+  imageUrl String?
 
-  // Lesson materials
-  materials LessonMaterial[]
+  order    Int
 
-  // NEW (evaluations) - lesson quizzes live here
-  evaluations Evaluation[]
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+}
 
-  @@unique([moduleId, order])
-  @@index([moduleId])
+enum LessonBlockType {
+  HEADING
+  TEXT
+  IMAGE
+  CALLOUT
+  BULLET_LIST
+  SECTION
 }
 
 enum LessonMaterialType {
-  VIDEO
   DOCUMENT
 }
 
@@ -166,6 +182,10 @@ model LessonMaterial {
   mimeType  String?
   sizeBytes Int?
 
+  parsed Boolean @default(false) // for future use if you want to parse content (e.g. extract text from PDF)
+  parsedText String? @db.Text // store extracted text for search etc.
+  parseError String? // store any parsing errors
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -173,6 +193,51 @@ model LessonMaterial {
 
   @@unique([lessonId, order])
   @@index([lessonId])
+}
+
+model Scenario {
+  id        String @id @default(cuid())
+  lessonId  String @unique
+
+  title       String
+  instruction String?
+  level       ScenarioLevel @default(FOUNDATION)
+
+  chartImageUrl String?
+  description   String? @db.Text
+
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  submissions ScenarioSubmission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ScenarioSubmission {
+  id        String @id @default(cuid())
+  scenarioId String
+  userId     String
+
+  structure    String? @db.Text
+  liquidity    String? @db.Text
+  risk         String? @db.Text
+  invalidation String? @db.Text
+  failure      String? @db.Text
+
+  passed Boolean @default(false)
+  feedback String? @db.Text
+
+  scenario Scenario @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+enum ScenarioLevel {
+  FOUNDATION
+  INTERMEDIATE
+  ADVANCED
 }
 
 model Enrollment {
@@ -228,8 +293,6 @@ model Certificate {
 
 enum BankType {
   QUIZ
-  ASSESSMENT
-  TEST
 }
 
 model QuestionBank {
@@ -284,9 +347,7 @@ model BankOption {
 //
 
 enum EvaluationType {
-  QUIZ // small quiz (between lessons)
-  ASSESSMENT // after module
-  TEST // end of program
+  QUIZ // small quiz (after modules)
 }
 
 model Evaluation {

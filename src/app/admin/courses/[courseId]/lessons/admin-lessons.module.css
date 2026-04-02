@@ -192,6 +192,70 @@
   align-items: center;
 }
 
+.builderShell {
+  display: flex;
+  height: 100vh;
+}
+
+.builderMain {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px;
+}
+
+/* SIDEBAR */
+
+.builderSidebar {
+  width: 260px;
+  background: linear-gradient(
+    180deg,
+    #071a2f 0%,
+    #091f36 100%
+  );
+
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.builderLogo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.builderBack {
+  font-size: 13px;
+  opacity: .8;
+  margin-bottom: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.builderActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.builderBtn {
+  background: rgba(255,255,255,.05);
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: left;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.builderBtn:hover {
+  background: rgba(255,255,255,.1);
+}
+
 @media (max-width: 900px) {
   .materialForm {
     grid-template-columns: 1fr;

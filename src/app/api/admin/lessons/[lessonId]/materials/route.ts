@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
+import { parseLessonDocument } from "@/lib/lesson-parser";
 
 async function requireAdmin() {
   const session = await getServerSession(authOptions);
@@ -35,23 +36,60 @@ export async function GET(_req: Request, ctx: { params: Promise<{ lessonId: stri
   return NextResponse.json({ materials });
 }
 
-export async function POST(req: Request, ctx: { params: Promise<{ lessonId: string }> }) {
+export async function POST(
+  req: Request,
+  ctx: { params: Promise<{ lessonId: string }> }
+) {
   const { lessonId } = await ctx.params;
 
   const session = await requireAdmin();
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!session)
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    );
 
-  const body = await req.json().catch(() => ({}));
-  const type = String(body?.type || "").toUpperCase();
-  const title = String(body?.title || "").trim();
-  const url = String(body?.url || "").trim();
+  const form = await req.formData().catch(() => null);
+  if (!form) {
+    return NextResponse.json(
+      { error: "Invalid form data" },
+      { status: 400 }
+    );
+  }
 
-  if (!title) return NextResponse.json({ error: "title is required" }, { status: 400 });
-  if (!url) return NextResponse.json({ error: "url is required" }, { status: 400 });
-  if (!["VIDEO", "DOCUMENT"].includes(type))
-    return NextResponse.json({ error: "type must be VIDEO | DOCUMENT" }, { status: 400 });
+  const file = form.get("file");
+  const title = String(form.get("title") || "").trim();
 
-  // Put new items at the end by default
+  if (!(file instanceof File)) {
+    return NextResponse.json(
+      { error: "File required" },
+      { status: 400 }
+    );
+  }
+
+  // save file
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  const fs = await import("fs/promises");
+  const path = await import("path");
+
+  const uploadsDir = path.join(
+    process.cwd(),
+    "public",
+    "uploads"
+  );
+
+  await fs.mkdir(uploadsDir, { recursive: true });
+
+  const ext = file.name.split(".").pop();
+  const filename = `${Date.now()}-${file.name}`;
+  const filepath = path.join(uploadsDir, filename);
+
+  await fs.writeFile(filepath, buffer);
+
+  const url = `/uploads/${filename}`;
+
   const last = await prisma.lessonMaterial.findFirst({
     where: { lessonId },
     orderBy: { order: "desc" },
@@ -61,13 +99,40 @@ export async function POST(req: Request, ctx: { params: Promise<{ lessonId: stri
   const created = await prisma.lessonMaterial.create({
     data: {
       lessonId,
-      type: type as any,
-      title,
+      type: "DOCUMENT",
+      title: title || file.name,
       url,
+      fileName: file.name,
+      mimeType: file.type,
+      sizeBytes: file.size,
       order: (last?.order ?? 0) + 1,
     },
-    select: { id: true, type: true, title: true, url: true, order: true },
   });
+
+  // parse document
+const fullPath = path.join(
+  process.cwd(),
+  "public",
+  url
+);
+
+const blocks = await parseLessonDocument(fullPath);
+
+// remove old blocks
+await prisma.lessonBlock.deleteMany({
+  where: { lessonId },
+});
+
+// create new blocks
+await prisma.lessonBlock.createMany({
+  data: blocks.map((b, i) => ({
+    lessonId,
+    type: b.type,
+    content: b.content ?? null,
+    imageUrl: b.imageUrl ?? null,
+    order: i + 1,
+  })),
+});
 
   return NextResponse.json({ material: created });
 }

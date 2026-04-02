@@ -1,0 +1,127 @@
+/* src/app/(lms)/lessons/[lessonId]/LessonSidebar.module.css */
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+
+  background: linear-gradient(
+    180deg,
+    #071a2f 0%,
+    #091f36 100%
+  );
+
+  color: white;
+  padding: 20px 18px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* logo */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* back */
+
+.back {
+  font-size: 13px;
+  opacity: .8;
+  margin-bottom: 22px;
+  text-decoration: none;
+  color: white;
+}
+
+/* module */
+
+.moduleBlock {
+  margin-bottom: 20px;
+}
+
+.moduleLabel {
+  font-size: 11px;
+  opacity: .6;
+  margin-bottom: 4px;
+}
+
+.moduleTitle {
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.progress {
+  height: 6px;
+  background: rgba(255,255,255,.15);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #22c55e;
+}
+
+/* scroll area */
+
+.scroll {
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* section */
+
+.section {
+  font-size: 12px;
+  opacity: .6;
+  margin-bottom: 10px;
+}
+
+/* lessons */
+
+.lessonList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lessonItem {
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  opacity: .8;
+}
+
+.lessonItem:hover {
+  background: rgba(255,255,255,.08);
+}
+
+.active {
+  background: rgba(37,99,235,.35);
+  opacity: 1;
+}
+
+/* quiz */
+
+.quiz {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(255,255,255,.08);
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+}
+
+.quiz:hover {
+  background: rgba(255,255,255,.12);
+}

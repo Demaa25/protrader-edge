@@ -27,7 +27,7 @@ function computePlan(courseBaseKobo: number) {
 
   const baseKobo = courseBaseKobo;
 
-  const fullTotalKobo = nairaToKobo(200_000);               // 200k
+  const fullTotalKobo = baseKobo - nairaToKobo(50_000);               // 200k
   const twoPartTotalKobo = baseKobo;                        // 250k
   const threePartTotalKobo = baseKobo + nairaToKobo(10_000); // 260k
 

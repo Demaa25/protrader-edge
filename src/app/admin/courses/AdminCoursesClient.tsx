@@ -158,7 +158,7 @@ export default function AdminCoursesClient() {
                   href={`/admin/courses/${c.id}/lessons`}
                   style={{ color: "var(--primary)", fontWeight: 800, marginLeft: 8 }}
                 >
-                  Edit Lessons
+                  Edit Course
                 </a>
               </div>
             </div>
