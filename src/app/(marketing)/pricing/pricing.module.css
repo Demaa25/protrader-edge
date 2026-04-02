@@ -84,16 +84,29 @@
   font-weight: 700;
 }
 
-.price {
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: var(--pte-text-muted);
+  font-weight: 600;
+}
+
+.newPrice {
   font-size: 1.8rem;
   font-weight: 800;
   color: var(--pte-navy);
 }
 
-.price span {
+.discountNote {
   display: block;
   font-size: 0.85rem;
   color: var(--pte-gold);
+  font-weight: 600;
 }
 
 .cardLead {
@@ -169,32 +182,6 @@
   .labGrid {
     grid-template-columns: 1fr;
   }
-}
-
-
-
-.priceRow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.oldPrice {
-  text-decoration: line-through;
-  color: var(--pte-text-muted);
-  font-weight: 600;
-}
-
-.newPrice {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--pte-navy);
-}
-
-.discountNote {
-  font-size: 0.85rem;
-  color: var(--pte-gold);
-  font-weight: 600;
 }
 
 .disabledBtn {

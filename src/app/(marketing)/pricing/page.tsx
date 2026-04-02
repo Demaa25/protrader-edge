@@ -22,10 +22,10 @@ export default function PricingPage() {
 
           <div className={styles.heroActions}>
             <a
-              href="https://paystack.com/your-foundation-payment-link"
+              href="#programs"
               className="btn-primary"
             >
-              Purchase Program
+              Start With Foundation
             </a>
 
             <Link href="#programs" className="btn-secondary">
@@ -193,10 +193,10 @@ export default function PricingPage() {
           </p>
 
           <a
-            href="https://paystack.com/your-foundation-payment-link"
+            href="#programs"
             className="btn-primary"
           >
-            Purchase Program
+            Start Foundation Program
           </a>
         </section>
 
