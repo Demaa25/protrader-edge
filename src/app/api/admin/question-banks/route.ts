@@ -16,7 +16,7 @@ export async function GET(req: Request) {
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { searchParams } = new URL(req.url);
-  const type = searchParams.get("type") as "QUIZ" | "ASSESSMENT" | "TEST" | null;
+  const type = searchParams.get("type") as "QUIZ" | null;
 
   const banks = await prisma.questionBank.findMany({
     where: type ? { type } : undefined,
