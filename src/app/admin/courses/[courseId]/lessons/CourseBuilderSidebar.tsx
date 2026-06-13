@@ -7,14 +7,25 @@ import styles from "./admin-lessons.module.css";
 
 type Props = {
   courseId: string;
+
+  onAddThumbnail: () => void;
+
   onAddOverview: () => void;
+
+  onAddObjectives: () => void;
+
   onAddModule: () => void;
+
+  onAddCertification: () => void;
 };
 
 export default function CourseBuilderSidebar({
   courseId,
+  onAddThumbnail,
   onAddOverview,
+  onAddObjectives,
   onAddModule,
+  onAddCertification,
 }: Props) {
   return (
     <aside className={styles.builderSidebar}>
@@ -25,6 +36,7 @@ export default function CourseBuilderSidebar({
           width={28}
           height={28}
         />
+
         <span>ProTrader Edge</span>
       </div>
 
@@ -36,12 +48,39 @@ export default function CourseBuilderSidebar({
       </Link>
 
       <div className={styles.builderActions}>
-        <button className={styles.builderBtn} onClick={onAddOverview}>
+        <button
+          className={styles.builderBtn}
+          onClick={onAddThumbnail}
+        >
+          + Add Thumbnail
+        </button>
+
+        <button
+          className={styles.builderBtn}
+          onClick={onAddOverview}
+        >
           + Add Overview
         </button>
 
-        <button className={styles.builderBtn} onClick={onAddModule}>
+        <button
+          className={styles.builderBtn}
+          onClick={onAddObjectives}
+        >
+          + Add Objectives
+        </button>
+
+        <button
+          className={styles.builderBtn}
+          onClick={onAddModule}
+        >
           + Add Module
+        </button>
+
+        <button
+          className={styles.builderBtn}
+          onClick={onAddCertification}
+        >
+          + Add Certification Exam
         </button>
       </div>
     </aside>

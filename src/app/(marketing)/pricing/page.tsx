@@ -22,7 +22,7 @@ export default function PricingPage() {
 
           <div className={styles.heroActions}>
             <a
-              href="#programs"
+              href="/register"
               className="btn-primary"
             >
               Start With Foundation
@@ -98,7 +98,7 @@ export default function PricingPage() {
             </p>
 
             <a
-              href={`/api/paystack/initialize?course=foundation`}
+              href="/register"
               className="btn-primary" style={{ textAlign: "center" }}
             >
               Purchase Program
@@ -193,7 +193,7 @@ export default function PricingPage() {
           </p>
 
           <a
-            href="#programs"
+            href="/register"
             className="btn-primary"
           >
             Start Foundation Program

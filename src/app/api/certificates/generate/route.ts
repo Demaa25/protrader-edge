@@ -4,41 +4,155 @@ import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
 
-function makeCertNo() {
-  return `PTE-${Date.now().toString(36).toUpperCase()}`;
+function generateCertificateNumber(
+  count: number
+) {
+  const year =
+    new Date().getFullYear();
+
+  const padded = String(
+    count + 1
+  ).padStart(5, "0");
+
+  return `PTE-${year}-${padded}`;
 }
 
-export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
+export async function POST(
+  req: Request
+) {
+  try {
+    const session =
+      await getServerSession(
+        authOptions
+      );
 
-  if (!session?.user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+    if (!session?.user) {
+      return NextResponse.json(
+        {
+          error: "Unauthorized",
+        },
+        {
+          status: 401,
+        }
+      );
+    }
 
-  const { courseId } = (await req.json()) as { courseId: string };
+    const userId = (
+      session.user as any
+    )?.id;
 
-  // your app stores id on session user at runtime
-  const userId = (session.user as any)?.id as string | undefined;
+    if (!userId) {
+      return NextResponse.json(
+        {
+          error: "Unauthorized",
+        },
+        {
+          status: 401,
+        }
+      );
+    }
 
-  if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+    const { courseId } =
+      await req.json();
 
-  const cert = await prisma.certificate.upsert({
-    where: { userId_courseId: { userId, courseId } },
-    update: {},
-    create: {
-      userId,
-      courseId,
-      certificateNumber: makeCertNo(),
-      // pdfUrl: set later when you implement PDF generation/storage
-    },
-    include: {
-      course: {
-        select: { title: true },
+    /* =========================
+       CHECK EXISTING
+    ========================= */
+
+    const existing =
+      await prisma.certificate.findUnique(
+        {
+          where: {
+            userId_courseId: {
+              userId,
+              courseId,
+            },
+          },
+
+          include: {
+            user: {
+              select: {
+                name: true,
+              },
+            },
+
+            course: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        }
+      );
+
+    if (existing) {
+      return NextResponse.json({
+        certificate: existing,
+      });
+    }
+
+    /* =========================
+       COUNT
+    ========================= */
+
+    const total =
+      await prisma.certificate.count();
+
+    /* =========================
+       CERT NUMBER
+    ========================= */
+
+    const certificateNumber =
+      generateCertificateNumber(
+        total
+      );
+
+    /* =========================
+       CREATE
+    ========================= */
+
+    const certificate =
+      await prisma.certificate.create(
+        {
+          data: {
+            userId,
+            courseId,
+
+            certificateNumber,
+
+            issuedAt:
+              new Date(),
+          },
+
+          include: {
+            user: {
+              select: {
+                name: true,
+              },
+            },
+
+            course: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        }
+      );
+
+    return NextResponse.json({
+      certificate,
+    });
+  } catch (e: any) {
+    return NextResponse.json(
+      {
+        error:
+          e.message ||
+          "Failed to generate certificate",
       },
-    },
-  });
-
-  return NextResponse.json({ certificate: cert });
+      {
+        status: 500,
+      }
+    );
+  }
 }

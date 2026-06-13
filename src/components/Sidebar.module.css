@@ -48,6 +48,43 @@
   color: #c6a437;
 }
 
+/* SCROLLABLE AREA */
+
+.navScroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+
+  /* Firefox Hide scrollbar */
+  scrollbar-width: none;
+  scrollbar-color: rgba(255,255,255,.18) transparent;
+}
+
+/* Chrome, Edge, Safari */
+.navScroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.navScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.navScroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.18);
+  border-radius: 20px;
+}
+
+.navScroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,.28);
+}
+
+/* remove arrows */
+.navScroll::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
 /* NAV */
 
 .nav {
@@ -160,4 +197,10 @@
 
 .switchDark .switchThumb {
   left: 24px;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,.1);
+  margin: 8px 0;
 }

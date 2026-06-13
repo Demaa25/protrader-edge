@@ -1,0 +1,195 @@
+/* src/app/(lms)/lesson-video/[lessonId]/CustomVideoPlayer.module.css */
+.player {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border-radius: 24px;
+  overflow: hidden;
+  min-height: 450px;
+}
+
+.video {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+
+.centerLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.seekLeftZone,
+.seekRightZone {
+  position: absolute;
+  top: 0;
+  width: 35%;
+  height: 100%;
+  z-index: 3;
+}
+
+.seekLeftZone {
+  left: 0;
+}
+
+.seekRightZone {
+  right: 0;
+}
+
+.bigPlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.bigPlay svg {
+  font-size: 90px;
+  color: white;
+
+  background: rgba(0,0,0,0.45);
+
+  border-radius: 999px;
+
+  padding: 24px;
+}
+
+.seekIndicatorLeft,
+.seekIndicatorRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+
+  width: 120px;
+  height: 120px;
+
+  border-radius: 999px;
+
+  background: rgba(0,0,0,0.45);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 22px;
+  font-weight: 800;
+
+  animation: pop .4s ease;
+}
+
+.seekIndicatorLeft {
+  left: 10%;
+}
+
+.seekIndicatorRight {
+  right: 10%;
+}
+
+@keyframes pop {
+  from {
+    transform:
+      translateY(-50%)
+      scale(0.7);
+
+    opacity: 0;
+  }
+
+  to {
+    transform:
+      translateY(-50%)
+      scale(1);
+
+    opacity: 1;
+  }
+}
+
+.controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 10;
+
+  padding: 16px;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,0.82),
+      transparent
+    );
+
+  transition: opacity .25s ease;
+}
+
+.controlsShow {
+  opacity: 1;
+}
+
+.controlsHide {
+  opacity: 0;
+}
+
+.progress {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.bottomControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leftControls,
+.rightControls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.iconBtn {
+  border: none;
+  background: transparent;
+  color: white;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.time {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.volume {
+  width: 90px;
+}
+
+.player:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  background: #000;
+}
+
+.player:fullscreen .video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

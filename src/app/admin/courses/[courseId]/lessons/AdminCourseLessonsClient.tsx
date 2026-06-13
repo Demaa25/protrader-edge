@@ -1,7 +1,9 @@
 // src/app/admin/courses/[courseId]/lessons/AdminCourseLessonsClient.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { Trash2 } from "lucide-react";
+import Link from "next/link";
 import styles from "./admin-lessons.module.css";
 import CourseBuilderSidebar from "./CourseBuilderSidebar";
 
@@ -30,10 +32,22 @@ type QuestionBank = {
   title: string;
 };
 
-const fetchJson = async (url: string, init?: RequestInit) => {
+const fetchJson = async (
+  url: string,
+  init?: RequestInit
+) => {
   const res = await fetch(url, init);
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data?.error ?? "Request failed");
+
+  const data = await res
+    .json()
+    .catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(
+      data?.error ?? "Request failed"
+    );
+  }
+
   return data;
 };
 
@@ -42,35 +56,90 @@ export default function AdminCourseLessonsClient({
 }: {
   courseId: string;
 }) {
-  const [modules, setModules] = useState<ModuleItem[]>([]);
+  // ===========================
+  // THUMBNAIL
+  // ===========================
+
+  const [thumbnailOpen, setThumbnailOpen] = useState (false);
+
+  const [thumbnailUploading, setThumbnailUploading] = useState (false);
+
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+
+  const [thumbnailUploaded, setThumbnailUploaded] = useState (false);
+
+  // ===========================
+  // OVERVIEW
+  // ===========================
+
+  const [overviewOpen, setOverviewOpen] =
+    useState(false);
+
+  const [overviewPreview, setOverviewPreview] =
+    useState(false);
+
+  const [overviewText, setOverviewText] =
+    useState("");
+
+  const [overviewSaved, setOverviewSaved] =
+    useState(false);
+
+  // ===========================
+  // OBJECTIVES
+  // ===========================
+
+  const [objectivesOpen, setObjectivesOpen] =
+    useState(false);
+
+  const [objectivesPreview, setObjectivesPreview] =
+    useState(false);
+
+  const [objectivesText, setObjectivesText] =
+    useState("");
+
+  const [objectivesSaved, setObjectivesSaved] =
+    useState(false);
+
+  // ===========================
+    
+  const [modules, setModules] = useState<
+    ModuleItem[]
+  >([]);
+
   const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState("");
 
-  const [moduleTitle, setModuleTitle] = useState("");
+  const [banks, setBanks] = useState<
+    QuestionBank[]
+  >([]);
 
-  const [banks, setBanks] = useState<QuestionBank[]>([]);
-  const [quizModuleId, setQuizModuleId] = useState<string | null>(null);
-  const [quizTitle, setQuizTitle] = useState("");
-  const [quizBankId, setQuizBankId] = useState("");
+  const [quizModuleId, setQuizModuleId] =
+    useState<string | null>(null);
 
-  // NEW uploader state
-  const [uploadLessonId, setUploadLessonId] = useState<string | null>(null);
-  const [uploading, setUploading] = useState(false);
+  const [quizTitle, setQuizTitle] =
+    useState("");
 
-  const [scenarioLessonId, setScenarioLessonId] = useState<string | null>(null);
-  const [scenarioTitle, setScenarioTitle] = useState("");
-  const [scenarioInstruction, setScenarioInstruction] = useState("");
-  const [scenarioDescription, setScenarioDescription] = useState("");
-  const [scenarioLevel, setScenarioLevel] = useState("FOUNDATION");
-  const [chartFile, setChartFile] = useState<File | null>(null);
+  const [quizBankId, setQuizBankId] =
+    useState("");
 
   async function loadModules() {
     setLoading(true);
+
     try {
       const data = await fetchJson(
         `/api/admin/courses/${courseId}/modules`
       );
+
       setModules(data.modules ?? data);
+
+      if (data.course?.description) {
+        setOverviewText(
+          data.course.description
+        );
+
+        setOverviewSaved(true);
+      }
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -82,88 +151,113 @@ export default function AdminCourseLessonsClient({
     loadModules();
   }, [courseId]);
 
-  async function loadBanks() {
-    const data = await fetchJson(
-      `/api/admin/question-banks?type=QUIZ`
-    );
-    setBanks(data.banks ?? data);
-  }
-
-  async function createModule() {
-    const title = prompt("Module title");
-    if (!title) return;
-
-    await fetchJson(
-      `/api/admin/courses/${courseId}/modules`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title }),
-      }
-    );
-
-    loadModules();
-  }
-
-  async function addLesson(moduleId?: string) {
-    const id = moduleId ?? modules[0]?.id;
-    if (!id) return;
-
-    const title = prompt("Lesson title");
-    if (!title) return;
-
-    await fetchJson(
-      `/api/admin/modules/${id}/lessons`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title }),
-      }
-    );
-
-    loadModules();
-  }
-
-  async function openScenarioBuilder(lessonId?: string) {
-    const id = lessonId ?? modules[0]?.lessons[0]?.id;
-    if (!id) return;
-
-    setScenarioLessonId(id);
-  }
-
-  async function createScenario() {
-    if (!scenarioLessonId) return;
+  async function uploadThumbnail() {
+    if (!thumbnailFile) {
+      alert("Please select an image");
+      return;
+    }
 
     const form = new FormData();
 
-    form.append("title", scenarioTitle);
-    form.append("instruction", scenarioInstruction);
-    form.append("description", scenarioDescription);
-    form.append("level", scenarioLevel);
+    form.append("file", thumbnailFile);
 
-    if (chartFile) {
-      form.append("chart", chartFile);
-    }
+    setThumbnailUploading(true);
 
-    await fetch(
-      `/api/admin/scenario/${scenarioLessonId}`,
+    const res = await fetch(
+      `/api/admin/courses/${courseId}/thumbnail`,
       {
         method: "POST",
         body: form,
       }
     );
 
-    setScenarioLessonId(null);
+    setThumbnailUploading(false);
+
+    if (!res.ok) {
+      alert("Failed to upload thumbnail");
+      return;
+    }
+
+    setThumbnailUploaded(true);
+
+    alert("Thumbnail uploaded successfully");
+
+    setThumbnailOpen(false);
+
+    setThumbnailFile(null);
   }
 
+  async function loadBanks() {
+    const data = await fetchJson(
+      `/api/admin/question-banks?type=QUIZ`
+    );
 
-  async function openQuiz(moduleId?: string) {
+    setBanks(data.banks ?? data);
+  }
+
+  async function createModule() {
+    const title = prompt("Module title");
+
+    if (!title) return;
+
+    await fetchJson(
+      `/api/admin/courses/${courseId}/modules`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          title,
+        }),
+      }
+    );
+
+    loadModules();
+  }
+
+  async function addLesson(
+    moduleId?: string
+  ) {
     const id = moduleId ?? modules[0]?.id;
+
+    if (!id) return;
+
+    const title = prompt("Lesson title");
+
+    if (!title) return;
+
+    await fetchJson(
+      `/api/admin/modules/${id}/lessons`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          title,
+        }),
+      }
+    );
+
+    loadModules();
+  }
+
+  async function openQuiz(
+    moduleId?: string
+  ) {
+    const id = moduleId ?? modules[0]?.id;
+
     if (!id) return;
 
     setQuizModuleId(id);
+
     setQuizTitle("");
+
     setQuizBankId("");
+
     await loadBanks();
   }
 
@@ -174,7 +268,10 @@ export default function AdminCourseLessonsClient({
       `/api/admin/modules/${quizModuleId}/quiz`,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
         body: JSON.stringify({
           title: quizTitle,
           bankId: quizBankId,
@@ -183,56 +280,61 @@ export default function AdminCourseLessonsClient({
     );
 
     setQuizModuleId(null);
+
     loadModules();
   }
 
-  async function uploadFile(
-    lessonId: string,
-    file: File
+  async function deleteModule(
+    moduleId: string
   ) {
-    const form = new FormData();
-    form.append("file", file);
+    if (!confirm("Delete module?"))
+      return;
 
-    setUploading(true);
-
-    await fetch(
-      `/api/admin/lessons/${lessonId}/materials`,
+    await fetchJson(
+      `/api/admin/modules/${moduleId}`,
       {
-        method: "POST",
-        body: form,
+        method: "DELETE",
       }
     );
 
-    setUploading(false);
-    setUploadLessonId(null);
+    loadModules();
   }
 
-  async function deleteModule(moduleId: string) {
-    if (!confirm("Delete module?")) return;
+  async function removeLesson(
+    lessonId: string
+  ) {
+    if (!confirm("Delete lesson?"))
+      return;
 
-    await fetchJson(`/api/admin/modules/${moduleId}`, {
-      method: "DELETE",
-    });
+    await fetchJson(
+      `/api/admin/lessons/${lessonId}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     loadModules();
   }
 
-  async function removeLesson(lessonId: string) {
-    await fetchJson(`/api/admin/lessons/${lessonId}`, {
-      method: "DELETE",
-    });
-
-    loadModules();
+  if (loading) {
+    return <div>Loading...</div>;
   }
-
-  if (loading) return <div>Loading...</div>;
 
   return (
     <div className={styles.builderShell}>
       <CourseBuilderSidebar
         courseId={courseId}
-        onAddOverview={() => alert("Add overview")}
+        onAddThumbnail={() =>
+          setThumbnailOpen(true)
+        }
+        onAddOverview={() =>
+          setOverviewOpen(true)
+        }
+        onAddObjectives={() =>
+          setObjectivesOpen(true)
+        }
         onAddModule={createModule}
+        onAddCertification={() => {}}
       />
 
       <main className={styles.builderMain}>
@@ -243,7 +345,9 @@ export default function AdminCourseLessonsClient({
         </div>
 
         {error && (
-          <div className={styles.error}>{error}</div>
+          <div className={styles.error}>
+            {error}
+          </div>
         )}
 
         <section className={styles.card}>
@@ -251,20 +355,412 @@ export default function AdminCourseLessonsClient({
             Course Structure
           </div>
 
+          {/* THUMBNAIL */}
+
+          {thumbnailOpen && (
+            <section className={styles.card}>
+              <div className={styles.cardTitle}>
+                Upload Course Thumbnail
+              </div>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file =
+                    e.target.files?.[0];
+
+                  if (file) {
+                    setThumbnailFile(file);
+                  }
+                }}
+              />
+
+              {thumbnailFile && (
+                <div style={{ marginTop: 12 , fontWeight: 700}}>
+                  Selected:
+                  {" "}
+                  {thumbnailFile.name}
+                </div>
+              )}
+
+              <div
+                style={{
+                  marginTop: 16,
+                  display: "flex",
+                  gap: 12,
+                }}
+              >
+                <button
+                  className={styles.secondary}
+                  onClick={() => {
+                    setThumbnailOpen(false);
+                    setThumbnailFile(null);
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button 
+                  className={styles.primary}
+                  onClick={uploadThumbnail}
+                  disabled={
+                    !thumbnailFile ||
+                    thumbnailUploading
+                  }
+                >
+                  {thumbnailUploading
+                    ? "Uploading..."
+                    : "Upload Thumbnail"
+                  }
+                </button>
+              </div>
+            </section>
+          )}
+
+          {(overviewOpen ||
+            overviewSaved) && (
+            <div className={styles.overviewBox}>
+              <div
+                className={
+                  styles.overviewHead
+                }
+              >
+                <div>
+                  <h2
+                    className={
+                      styles.overviewTitle
+                    }
+                  >
+                    Course Overview
+                  </h2>
+
+                  <p
+                    className={
+                      styles.overviewSub
+                    }
+                  >
+                    What this course is about.
+                  </p>
+                </div>
+
+                <div
+                  className={
+                    styles.overviewBtnRow
+                  }
+                >
+                  {overviewSaved &&
+                    !overviewOpen && (
+                      <button
+                        className={
+                          styles.secondary
+                        }
+                        onClick={() =>
+                          setOverviewPreview(
+                            !overviewPreview
+                          )
+                        }
+                      >
+                        {overviewPreview
+                          ? "Hide Preview"
+                          : "Preview"}
+                      </button>
+                    )}
+
+                  {overviewSaved &&
+                    !overviewOpen && (
+                      <button
+                        className={
+                          styles.secondary
+                        }
+                        onClick={() =>
+                          setOverviewOpen(
+                            true
+                          )
+                        }
+                      >
+                        Edit
+                      </button>
+                    )}
+                </div>
+              </div>
+
+              {overviewOpen ? (
+                <>
+                  <textarea
+                    value={overviewText}
+                    onChange={(e) =>
+                      setOverviewText(
+                        e.target.value
+                      )
+                    }
+                    placeholder="Write course overview..."
+                    className={
+                      styles.overviewTextarea
+                    }
+                  />
+
+                  <div
+                    className={
+                      styles.overviewActions
+                    }
+                  >
+                    <button
+                      className={
+                        styles.secondary
+                      }
+                      onClick={() =>
+                        setOverviewOpen(
+                          false
+                        )
+                      }
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      className={
+                        styles.primary
+                      }
+                      onClick={async () => {
+                        await fetch(
+                          `/api/admin/courses/${courseId}/overview`,
+                          {
+                            method:
+                              "POST",
+
+                            headers: {
+                              "Content-Type":
+                                "application/json",
+                            },
+
+                            body: JSON.stringify(
+                              {
+                                description:
+                                  overviewText,
+                              }
+                            ),
+                          }
+                        );
+
+                        setOverviewSaved(
+                          true
+                        );
+
+                        setOverviewOpen(
+                          false
+                        );
+
+                        setOverviewPreview(
+                          false
+                        );
+                      }}
+                    >
+                      Save Overview
+                    </button>
+                  </div>
+                </>
+              ) : null}
+
+              {overviewSaved &&
+                overviewPreview && (
+                  <div
+                    className={
+                      styles.overviewContent
+                    }
+                  >
+                    {overviewText}
+                  </div>
+                )}
+            </div>
+          )}
+
+          {/* OBJECTIVES */}
+
+          {(objectivesOpen ||
+            objectivesSaved) && (
+            <div className={styles.overviewBox}>
+              <div className={styles.overviewHead}>
+                <div>
+                  <h2
+                    className={
+                      styles.overviewTitle
+                    }
+                  >
+                    Learning Objectives
+                  </h2>
+
+                  <p
+                    className={
+                      styles.overviewSub
+                    }
+                  >
+                    What students will learn in this course.
+                  </p>
+                </div>
+
+                <div
+                  className={
+                    styles.overviewBtnRow
+                  }
+                >
+                  {objectivesSaved &&
+                    !objectivesOpen && (
+                      <button
+                        className={
+                          styles.secondary
+                        }
+                        onClick={() =>
+                          setObjectivesPreview(
+                            !objectivesPreview
+                          )
+                        }
+                      >
+                        {objectivesPreview
+                          ? "Hide Preview"
+                          : "Preview"}
+                      </button>
+                    )}
+
+                  {objectivesSaved &&
+                    !objectivesOpen && (
+                      <button
+                        className={
+                          styles.secondary
+                        }
+                        onClick={() =>
+                          setObjectivesOpen(
+                            true
+                          )
+                        }
+                      >
+                        Edit
+                      </button>
+                    )}
+                </div>
+              </div>
+
+              {objectivesOpen ? (
+                <>
+                  <textarea
+                    value={objectivesText}
+                    onChange={(e) =>
+                      setObjectivesText(
+                        e.target.value
+                      )
+                    }
+                    placeholder="Write learning objectives..."
+                    className={
+                      styles.overviewTextarea
+                    }
+                  />
+
+                  <div
+                    className={
+                      styles.overviewActions
+                    }
+                  >
+                    <button
+                      className={
+                        styles.secondary
+                      }
+                      onClick={() =>
+                        setObjectivesOpen(
+                          false
+                        )
+                      }
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      className={
+                        styles.primary
+                      }
+                      onClick={ async () => {
+                        await fetch(
+                          `/api/admin/courses/${courseId}/objectives`,
+                          {
+                            method:
+                              "POST",
+
+                            headers: {
+                              "Content-Type":
+                                "application/json",
+                            },
+
+                            body: JSON.stringify(
+                              {
+                                objectives:
+                                  objectivesText,
+                              }
+                            ),
+                          }
+                        );
+
+                        setObjectivesSaved(
+                          true
+                        );
+
+                        setObjectivesOpen(
+                          false
+                        );
+
+                        setObjectivesPreview(
+                          false
+                        );
+                      }}
+                    >
+                      Save Objectives
+                    </button>
+                  </div>
+                </>
+              ) : null}
+
+              {objectivesSaved &&
+                objectivesPreview && (
+                  <div
+                    className={
+                      styles.overviewContent
+                    }
+                  >
+                    {objectivesText}
+                  </div>
+                )}
+            </div>
+          )}
+
           <div className={styles.modules}>
             {modules.map((m) => (
               <div
                 key={m.id}
-                className={styles.moduleBlock}
+                className={
+                  styles.moduleBlock
+                }
               >
-                <div className={styles.moduleHead}>
-                  <div className={styles.moduleTitle}>
-                    Module {m.order}: {m.title}
+                <div
+                  className={
+                    styles.moduleHead
+                  }
+                >
+                  <div
+                    className={
+                      styles.moduleTitle
+                    }
+                  >
+                    Module {m.order}:{" "}
+                    {m.title}
                   </div>
 
-                  <div className={styles.moduleActions}>
+                  <div
+                    className={
+                      styles.moduleActions
+                    }
+                  >
                     <button
-                      className={styles.secondary}
+                      className={
+                        styles.secondary
+                      }
                       onClick={() =>
                         addLesson(m.id)
                       }
@@ -273,7 +769,9 @@ export default function AdminCourseLessonsClient({
                     </button>
 
                     <button
-                      className={styles.secondary}
+                      className={
+                        styles.secondary
+                      }
                       onClick={() =>
                         openQuiz(m.id)
                       }
@@ -284,9 +782,13 @@ export default function AdminCourseLessonsClient({
                     </button>
 
                     <button
-                      className={styles.danger}
+                      className={
+                        styles.danger
+                      }
                       onClick={() =>
-                        deleteModule(m.id)
+                        deleteModule(
+                          m.id
+                        )
                       }
                     >
                       Delete
@@ -294,59 +796,53 @@ export default function AdminCourseLessonsClient({
                   </div>
                 </div>
 
-                <div className={styles.lessonTree}>
+                <div
+                  className={
+                    styles.lessonTree
+                  }
+                >
                   {m.lessons.map((l) => (
                     <div
                       key={l.id}
-                      className={styles.lessonRow}
+                      className={
+                        styles.lessonCard
+                      }
                     >
-                      Lesson {l.order}: {l.title}
+                      <Link
+                        href={`/admin/courses/${courseId}/lessons/${l.id}/builder`}
+                        className={
+                          styles.lessonLink
+                        }
+                      >
+                        <span>
+                          Lesson {l.order}:{" "}
+                          {l.title}
+                        </span>
+                      </Link>
 
-                      <div>
-                        <button
-                          className={styles.link}
-                          onClick={() =>
-                            setUploadLessonId(l.id)
-                          }
-                        >
-                          Upload Doc
-                        </button>
-
-                        <button
-                          className={styles.link}
-                          onClick={() => openScenarioBuilder(l.id)}
-                        >
-                          Add Scenario
-                        </button>
-
-                        <button
-                          onClick={() =>
-                            removeLesson(l.id)
-                          }
-                          className={styles.linkDanger}
-                        >
-                          remove
-                        </button>
-                      </div>
-
-                      {uploadLessonId === l.id && (
-                        <input
-                          type="file"
-                          accept=".pdf,.doc,.docx"
-                          onChange={(e) =>
-                            uploadFile(
-                              l.id,
-                              e.target.files![0]
-                            )
-                          }
-                        />
-                      )}
+                      <button
+                        onClick={() =>
+                          removeLesson(
+                            l.id
+                          )
+                        }
+                        className={
+                          styles.trashBtn
+                        }
+                      >
+                        <Trash2 size={16} />
+                      </button>
                     </div>
                   ))}
 
                   {m.quiz && (
-                    <div className={styles.quizRow}>
-                      Quiz: {m.quiz.title}
+                    <div
+                      className={
+                        styles.quizRow
+                      }
+                    >
+                      Quiz:{" "}
+                      {m.quiz.title}
                     </div>
                   )}
                 </div>
@@ -366,7 +862,9 @@ export default function AdminCourseLessonsClient({
                 className={styles.input}
                 value={quizTitle}
                 onChange={(e) =>
-                  setQuizTitle(e.target.value)
+                  setQuizTitle(
+                    e.target.value
+                  )
                 }
                 placeholder="Quiz title"
               />
@@ -375,7 +873,9 @@ export default function AdminCourseLessonsClient({
                 className={styles.input}
                 value={quizBankId}
                 onChange={(e) =>
-                  setQuizBankId(e.target.value)
+                  setQuizBankId(
+                    e.target.value
+                  )
                 }
               >
                 <option value="">
@@ -397,78 +897,6 @@ export default function AdminCourseLessonsClient({
                 onClick={createModuleQuiz}
               >
                 Save Quiz
-              </button>
-            </div>
-          </section>
-        )}
-
-        {scenarioLessonId && (
-          <section className={styles.card}>
-            <div className={styles.cardTitle}>
-              Create Scenario
-            </div>
-
-            <div className={styles.form}>
-              <input
-                className={styles.input}
-                placeholder="Scenario title"
-                value={scenarioTitle}
-                onChange={(e) =>
-                  setScenarioTitle(e.target.value)
-                }
-              />
-
-              <select
-                className={styles.input}
-                value={scenarioLevel}
-                onChange={(e) =>
-                  setScenarioLevel(e.target.value)
-                }
-              >
-                <option value="FOUNDATION">
-                  Foundation
-                </option>
-                <option value="INTERMEDIATE">
-                  Intermediate
-                </option>
-                <option value="ADVANCED">
-                  Advanced
-                </option>
-              </select>
-
-              <textarea 
-                className={styles.input}
-                placeholder="Instruction"
-                value={scenarioInstruction}
-                onChange={(e) =>
-                  setScenarioInstruction(e.target.value)
-                }
-              />
-
-              <textarea 
-                className={styles.input}
-                placeholder="Description"
-                value={scenarioDescription}
-                onChange={(e) =>
-                  setScenarioDescription(e.target.value)
-                }
-              />
-
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setChartFile(
-                    e.target.files?.[0] ?? null
-                  )
-                }
-              />
-
-              <button
-                className={styles.primary}
-                onClick={createScenario}
-              >
-                Save Scenario
               </button>
             </div>
           </section>

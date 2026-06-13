@@ -1,0 +1,176 @@
+/* src/app/(lms)/lesson-video/[lessonId]/lesson-video.module.css */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.main {
+  flex: 1;
+  padding: 40px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  background: rgba(23,92,211,0.08);
+  color: #175cd3;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  margin-bottom: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.1;
+  font-weight: 900;
+  color: #101828;
+}
+
+.sub {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #667085;
+  max-width: 760px;
+}
+
+.videoCard {
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+
+  border: 1px solid rgba(16,24,40,0.08);
+
+  box-shadow:
+    0 10px 30px rgba(16,24,40,0.04);
+}
+
+.videoWrap {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.empty {
+  padding: 80px 20px;
+  text-align: center;
+  color: #667085;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-top: 24px;
+}
+
+.primary,
+.secondary {
+  height: 52px;
+  padding: 0 24px;
+
+  border-radius: 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.primary {
+  background: #175cd3;
+  color: white;
+}
+
+.secondary {
+  background: white;
+  border: 1px solid rgba(16,24,40,0.10);
+  color: #101828;
+}
+
+.videoStack {
+  display: grid;
+  gap: 24px;
+}
+
+.videoItem {
+  display: grid;
+  gap: 14px;
+}
+
+.videoTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: #101828;
+}
+
+.customPlayer {
+  background: #000;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.videoElement {
+  width: 100%;
+  display: block;
+  background: #000;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 14px;
+  background: #0f172a;
+}
+
+.controlBtn {
+  border: none;
+  background: #175cd3;
+  color: white;
+
+  height: 40px;
+  padding: 0 18px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.time {
+  color: white;
+  font-size: 14px;
+  min-width: 90px;
+}
+
+.progressBar {
+  flex: 1;
+}

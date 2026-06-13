@@ -21,7 +21,7 @@ async function buildMyCourses(userId: string): Promise<MyCourse[]> {
   const purchases = await prisma.purchase.findMany({
     where: {
       userId,
-      status: { in: ["PAID", "PARTIAL"] as any }, // schema supports PARTIAL per your update
+      status: { in: ["PAID"] as any },
     },
     select: {
       course: {

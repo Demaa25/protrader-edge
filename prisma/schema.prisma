@@ -31,7 +31,6 @@ model User {
   enrollments    Enrollment[]
   lessonProgress LessonProgress[]
   certificates   Certificate[]
-  scenarios      ScenarioSubmission[]
 
   // NEW (payments)
   purchases Purchase[]
@@ -86,6 +85,7 @@ model Course {
   title        String
   category     String  @default("Forex")
   description  String?
+  objectives   String?
   thumbnailUrl String?
   published    Boolean @default(true)
 
@@ -138,7 +138,7 @@ model Lesson {
   progresses LessonProgress[]
   materials LessonMaterial[]
   evaluations Evaluation[]
-  scenarios Scenario?
+  application Application?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -168,6 +168,7 @@ enum LessonBlockType {
 
 enum LessonMaterialType {
   DOCUMENT
+  VIDEO
 }
 
 model LessonMaterial {
@@ -195,49 +196,40 @@ model LessonMaterial {
   @@index([lessonId])
 }
 
-model Scenario {
+model Application {
   id        String @id @default(cuid())
   lessonId  String @unique
 
-  title       String
   instruction String?
-  level       ScenarioLevel @default(FOUNDATION)
+  requirements String?
+  scenario     String? @db.Text
 
   chartImageUrl String?
-  description   String? @db.Text
+
+  focusAreas   String[]   // or JSON
+
+  submissions ApplicationSubmission[]
 
   lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-
-  submissions ScenarioSubmission[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
-model ScenarioSubmission {
+model ApplicationSubmission {
   id        String @id @default(cuid())
-  scenarioId String
+  applicationId String
   userId     String
 
-  structure    String? @db.Text
-  liquidity    String? @db.Text
-  risk         String? @db.Text
-  invalidation String? @db.Text
-  failure      String? @db.Text
+  structure    String?
+  liquidity    String?
+  risk         String?
+  invalidation String?
+  failure      String?
 
   passed Boolean @default(false)
   feedback String? @db.Text
 
-  scenario Scenario @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
-}
 
-enum ScenarioLevel {
-  FOUNDATION
-  INTERMEDIATE
-  ADVANCED
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
 }
 
 model Enrollment {
@@ -292,7 +284,9 @@ model Certificate {
 //
 
 enum BankType {
+  KNOWLEDGE_CHECK
   QUIZ
+  CERTIFICATION
 }
 
 model QuestionBank {
@@ -348,6 +342,8 @@ model BankOption {
 
 enum EvaluationType {
   QUIZ // small quiz (after modules)
+  KNOWLEDGE_CHECK // knowledge check (at the end of a lesson)
+  CERTIFICATION // certification exam (at the end of a course)
 }
 
 model Evaluation {
@@ -369,7 +365,7 @@ model Evaluation {
   lesson Lesson? @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
   // behaviour
-  questionCount Int     @default(10) // randomly pick 10 each attempt
+  questionCount Int     // dynamic now, determined by the bank and randomization
   passMarkPct   Int     @default(70)
   randomize     Boolean @default(true)
 
@@ -378,13 +374,6 @@ model Evaluation {
 
   attempts EvaluationAttempt[]
 
-  // Recommended constraints to avoid duplicates:
-  // - one QUIZ per lesson (if you want)
-  // - one ASSESSMENT per module (if you want)
-  // - one TEST per course (if you want)
-  //
-  // NOTE: Prisma doesn't support partial unique by enum condition,
-  // so we use multi-unique keys. Your app should enforce type rules.
   @@unique([lessonId, type])
   @@unique([moduleId, type])
   @@index([courseId])
@@ -454,24 +443,11 @@ model AttemptAnswer {
 
 //
 // =========================
-// PAYMENTS / INSTALLMENTS (unchanged)
+// PAYMENTS
 // =========================
 //
 
 enum PurchaseStatus {
-  PENDING
-  PARTIAL
-  PAID
-  FAILED
-}
-
-enum InstallmentPlan {
-  FULL
-  TWO_PART
-  THREE_PART
-}
-
-enum InstallmentStatus {
   PENDING
   PAID
   FAILED
@@ -482,7 +458,6 @@ model Purchase {
   userId   String
   courseId String
 
-  planType   InstallmentPlan @default(FULL)
   totalKobo  Int
   amountKobo Int
 
@@ -494,27 +469,9 @@ model Purchase {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
-  installments Installment[]
-
   @@unique([userId, courseId])
   @@index([courseId])
   @@index([userId])
-}
-
-model Installment {
-  id            String            @id @default(cuid())
-  purchaseId    String
-  installmentNo Int
-  amountKobo    Int
-  dueDate       DateTime?
-  status        InstallmentStatus @default(PENDING)
-  reference     String?           @unique
-  paidAt        DateTime?
-
-  purchase Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
-
-  @@unique([purchaseId, installmentNo])
-  @@index([purchaseId])
 }
 
 model PasswordResetToken {

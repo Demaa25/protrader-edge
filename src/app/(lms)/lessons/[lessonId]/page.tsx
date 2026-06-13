@@ -42,8 +42,19 @@ export default async function LessonPage({
     select: { id: true },
   });
 
-  const progress =
-    (lesson.order / lesson.module.lessons.length) * 100;
+  const progresses = await prisma.lessonProgress.findMany({
+    where: {
+      userId: session.user.id,
+      lessonId: { in: lesson.module.lessons.map((l) => l.id) },
+    },
+  });
+
+  const progressMap = Object.fromEntries(
+    progresses.map((p) => [p.lessonId, p])
+  );
+
+  const completedCount = progresses.filter((p) => p.completed).length;
+  const progress = (completedCount / lesson.module.lessons.length) * 100;
 
   return (
     <div className={styles.layout}>
@@ -56,6 +67,7 @@ export default async function LessonPage({
         currentLessonId={lesson.id}
         quizId={quiz?.id}
         progressPct={progress}
+        progressMap={progressMap}
       />
 
       <main className={styles.main}>
@@ -71,10 +83,10 @@ export default async function LessonPage({
 
         <div className={styles.footer}>
           <a
-            href={`/scenario/${lesson.id}`}
+            href={`/lesson-video/${lesson.id}`}
             className={styles.cta}
           >
-            Proceed to Application →
+            Proceed to Video →
           </a>
         </div>
       </main>

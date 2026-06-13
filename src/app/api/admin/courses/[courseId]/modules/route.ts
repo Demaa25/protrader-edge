@@ -1,4 +1,5 @@
 // src/app/api/admin/courses/[courseId]/modules/route.ts
+
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
@@ -10,25 +11,47 @@ export async function GET(
   const { courseId } = await ctx.params;
 
   const session = await getSession();
-  if (!session?.user)
+
+  if (!session?.user) {
     return NextResponse.json(
       { error: "Unauthorized" },
       { status: 401 }
     );
+  }
 
   const role = (session.user as any)?.role as
     | string
     | undefined;
 
-  if (role !== "ADMIN")
+  if (role !== "ADMIN") {
     return NextResponse.json(
       { error: "Forbidden" },
       { status: 403 }
     );
+  }
 
+  // ✅ FETCH COURSE
+  const course = await prisma.course.findUnique({
+    where: { id: courseId },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+    },
+  });
+
+  if (!course) {
+    return NextResponse.json(
+      { error: "Course not found" },
+      { status: 404 }
+    );
+  }
+
+  // ✅ FETCH MODULES
   const modules = await prisma.module.findMany({
     where: { courseId },
     orderBy: { order: "asc" },
+
     select: {
       id: true,
       title: true,
@@ -37,6 +60,7 @@ export async function GET(
 
       lessons: {
         orderBy: { order: "asc" },
+
         select: {
           id: true,
           title: true,
@@ -46,7 +70,10 @@ export async function GET(
       },
 
       evaluations: {
-        where: { type: "QUIZ" },
+        where: {
+          type: "QUIZ",
+        },
+
         select: {
           id: true,
           type: true,
@@ -61,7 +88,8 @@ export async function GET(
     },
   });
 
-  const shaped = modules.map((m) => ({
+  // ✅ SHAPE MODULES
+  const shapedModules = modules.map((m) => ({
     id: m.id,
     title: m.title,
     order: m.order,
@@ -78,7 +106,11 @@ export async function GET(
       : null,
   }));
 
-  return NextResponse.json(shaped);
+  // ✅ RETURN BOTH COURSE + MODULES
+  return NextResponse.json({
+    course,
+    modules: shapedModules,
+  });
 }
 
 export async function POST(
@@ -88,21 +120,24 @@ export async function POST(
   const { courseId } = await ctx.params;
 
   const session = await getSession();
-  if (!session?.user)
+
+  if (!session?.user) {
     return NextResponse.json(
       { error: "Unauthorized" },
       { status: 401 }
     );
+  }
 
   const role = (session.user as any)?.role as
     | string
     | undefined;
 
-  if (role !== "ADMIN")
+  if (role !== "ADMIN") {
     return NextResponse.json(
       { error: "Forbidden" },
       { status: 403 }
     );
+  }
 
   const body = (await req.json().catch(() => ({}))) as {
     title?: string;
@@ -110,24 +145,28 @@ export async function POST(
 
   const title = String(body?.title ?? "").trim();
 
-  if (!title)
+  if (!title) {
     return NextResponse.json(
       { error: "Module title is required" },
       { status: 400 }
     );
+  }
 
+  // ✅ GET LAST MODULE ORDER
   const last = await prisma.module.findFirst({
     where: { courseId },
     orderBy: { order: "desc" },
     select: { order: true },
   });
 
+  // ✅ CREATE MODULE
   const created = await prisma.module.create({
     data: {
       courseId,
       title,
       order: (last?.order ?? 0) + 1,
     },
+
     select: {
       id: true,
       title: true,

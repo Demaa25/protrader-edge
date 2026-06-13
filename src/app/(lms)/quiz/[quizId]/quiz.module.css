@@ -1,53 +1,230 @@
 /* src/app/quiz/[quizId]/quiz.module.css */
-.shell { display: flex; }
-.main { flex: 1; padding: 24px 28px; }
-.h1 { margin: 0; font-size: 34px; }
-.sub { margin-top: 6px; color: var(--muted); }
-.card { margin-top: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(16,24,40,0.06); max-width: 860px; }
-.qTop { font-weight: 800; margin-bottom: 10px; }
-.q { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-.opt { display: flex; gap: 10px; align-items: flex-start; padding: 10px 8px; border-radius: 12px; border: 1px solid rgba(16,24,40,0.08); margin-bottom: 10px; }
-.btn { width: 100%; margin-top: 10px; background: var(--primary); border: none; color: #fff; font-weight: 800; padding: 12px 14px; border-radius: 12px; cursor: pointer; text-decoration: none; }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.back { display: inline-block; margin-top: 12px; color: var(--muted); text-decoration: none; }
-.back:hover { text-decoration: underline; }
-.content {
-  flex: 1;
+/* =========================
+   LAYOUT
+========================= */
+
+.layout {
   display: flex;
-  flex-direction: column;
+  min-height: 100vh;
+  background: #f5f7fb;
 }
 
-.actions {
+.main {
+  flex: 1;
+  padding: 40px 50px 60px;
   display: flex;
-  gap: 12px;
-  margin-top: 10px;
+  flex-direction: column;
+  align-items: center;
 }
+
+/* =========================
+   HEADINGS
+========================= */
+
+.h1 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: #0f172a;
+}
+
+.sub {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 18px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+  width: 100%;
+  max-width: 880px;
+
+  background: white;
+  border-radius: 16px;
+  padding: 26px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   QUESTION
+========================= */
+
+.qTop {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.q {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+
+  margin-bottom: 10px;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.opt:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.opt input {
+  margin-top: 3px;
+  accent-color: #2563eb;
+}
+
+/* =========================
+   BUTTONS
+========================= */
 
 .btnRow {
   display: flex;
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 18px;
 }
 
-.btnSecondary {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text, #111);
+.btn {
+  flex: 1;
+  height: 48px;
+
+  border-radius: 10px;
+  border: none;
+
+  font-weight: 700;
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
+
+/* PRIMARY */
 
 .btnPrimary {
-  background: var(--primary);
-  border: none;
-  color: #fff;
+  background: #2563eb;
+  color: white;
 }
 
-.btnSecondary:disabled,
-.btnPrimary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.btnPrimary:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
 }
+
+/* SECONDARY */
+
+.btnSecondary {
+  background: white;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+.btnSecondary:hover:not(:disabled) {
+  background: #f1f5f9;
+}
+
+/* DISABLED */
+
+.btn:disabled,
+.btnPrimary:disabled,
+.btnSecondary:disabled {
+  background: #94a3b8;
+  color: white;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================
+   RESULT STATES
+========================= */
+
+.pass {
+  margin-top: 16px;
+
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+  color: #065f46;
+
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.fail {
+  margin-top: 16px;
+
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #7f1d1d;
+
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* =========================
+   BACK LINK
+========================= */
+
+.back {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #64748b;
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   DISABLED LINK
+========================= */
 
 .disabledBtn {
   opacity: 0.5;
   pointer-events: none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .main {
+    padding: 24px 18px 40px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .btnRow {
+    flex-direction: column;
+  }
 }

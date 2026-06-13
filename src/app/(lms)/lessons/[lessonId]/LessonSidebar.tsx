@@ -11,15 +11,22 @@ type Lesson = {
   order: number;
 };
 
+type ProgressMap = {
+  [lessonId: string]: {
+    completed: boolean;
+    progress: number;
+  };
+};
+
 type Props = {
   courseId: string;
-  courseTitle: string;
   moduleTitle: string;
   moduleOrder: number;
   lessons: Lesson[];
   currentLessonId: string;
   quizId?: string | null;
   progressPct: number;
+  progressMap: ProgressMap;
 };
 
 export default function LessonSidebar({
@@ -30,78 +37,89 @@ export default function LessonSidebar({
   currentLessonId,
   quizId,
   progressPct,
+  progressMap,
 }: Props) {
   return (
     <aside className={styles.sidebar}>
-      {/* LOGO */}
-      <div className={styles.logo}>
-        <Image
-          src="/PTE Logo_2.png"
-          alt="logo"
-          width={28}
-          height={28}
-        />
-        <span>ProTrader Edge</span>
-      </div>
-
-      {/* BACK */}
-      <Link
-        href={`/courses/${courseId}`}
-        className={styles.back}
-      >
-        ← Back to Course
-      </Link>
-
-      {/* MODULE */}
-      <div className={styles.moduleBlock}>
-        <div className={styles.moduleLabel}>
-          MODULE {moduleOrder}
-        </div>
-
-        <div className={styles.moduleTitle}>
-          {moduleTitle}
-        </div>
-
-        <div className={styles.progress}>
-          <div
-            className={styles.progressFill}
-            style={{ width: `${progressPct}%` }}
+      <div className={styles.top}>
+        {/* LOGO */}
+        <div className={styles.logo}>
+          <Image
+            src="/PTE Logo_2.png"
+            alt="logo"
+            width={28}
+            height={28}
           />
+          <span>ProTrader Edge</span>
         </div>
-      </div>
 
-      {/* SCROLL AREA */}
-      <div className={styles.scroll}>
-        <div className={styles.section}>Lessons</div>
+        {/* BACK */}
+        <Link href={`/courses/${courseId}`} className={styles.back}>
+          ← Back to Course
+        </Link>
 
-        <div className={styles.lessonList}>
-          {lessons.map((lesson) => (
-            <Link
-              key={lesson.id}
-              href={`/lessons/${lesson.id}`}
-              className={`${styles.lessonItem} ${
-                lesson.id === currentLessonId
-                  ? styles.active
-                  : ""
-              }`}
-            >
-              Lesson {lesson.order}
-            </Link>
-          ))}
+        {/* MODULE */}
+        <div className={styles.moduleBlock}>
+          <div className={styles.moduleLabel}>
+            MODULE {moduleOrder}
+          </div>
 
-          {/* MODULE QUIZ (always visible) */}
-          {quizId && (
-            <Link
-              href={`/quiz/${quizId}`}
-              className={`${styles.quiz} ${
-                currentLessonId === "quiz"
-                  ? styles.active
-                  : ""
-              }`}
-            >
-              Quiz
-            </Link>
-          )}
+          <div className={styles.moduleTitle}>
+            {moduleTitle}
+          </div>
+
+          {/* PROGRESS TEXT */}
+          <div className={styles.progressText}>
+            {Math.round(progressPct)}% Complete
+          </div>
+
+          {/* BAR */}
+          <div className={styles.progress}>
+            <div
+              className={styles.progressFill}
+              style={{ width: `${progressPct}%` }}
+            />
+          </div>
+        </div>
+
+        {/* SCROLL */}
+        <div className={styles.scroll}>
+          <div className={styles.section}>Lessons</div>
+
+          <div className={styles.lessonList}>
+            {lessons.map((lesson) => {
+              const progress = progressMap[lesson.id];
+              const completed = progress?.completed;
+
+              return (
+                <Link
+                  key={lesson.id}
+                  href={`/lessons/${lesson.id}`}
+                  className={`${styles.lessonItem} ${
+                    lesson.id === currentLessonId
+                    ? styles.active
+                    : ""
+                  }`}
+                >
+                  <div
+                    className={`${styles.circle} ${
+                      completed ? styles.completed : ""
+                    }`}
+                  >
+                    {completed && "✓"}
+                  </div>
+
+                  <span>Lesson {lesson.order}</span>
+                </Link>
+              );
+            })}
+
+            {quizId && (
+              <Link href={`/quiz/${quizId}`} className={styles.quiz}>
+                Quiz
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </aside>

@@ -1,0 +1,233 @@
+/* src/app/(lms)/knowledge-check/[lessonId]/knowledge-check.module.css */
+/* =========================
+   LAYOUT
+========================= */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.main {
+  flex: 1;
+  padding: 40px 50px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  width: 100%;
+  max-width: 880px;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.header p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* =========================
+   CARD (IDENTICAL TO QUIZ)
+========================= */
+
+.card {
+  width: 100%;
+  max-width: 880px;
+
+  background: white;
+  border-radius: 16px;
+  padding: 26px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   QUESTION
+========================= */
+
+.qTop {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.q {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* =========================
+   OPTIONS (MATCH QUIZ)
+========================= */
+
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+
+  margin-bottom: 10px;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.opt:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.opt input {
+  margin-top: 3px;
+  accent-color: #2563eb;
+}
+
+/* =========================
+   BUTTONS (MATCH QUIZ)
+========================= */
+
+.btnRow {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.btnRow button {
+  flex: 1;
+  height: 48px;
+
+  border-radius: 10px;
+  border: none;
+
+  font-weight: 700;
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+/* PRIMARY (NEXT / SUBMIT) */
+
+.btnRow button:last-child {
+  background: #2563eb;
+  color: white;
+}
+
+.btnRow button:last-child:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* SECONDARY (PREVIOUS) */
+
+.btnRow button:first-child {
+  background: white;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+.btnRow button:first-child:hover:not(:disabled) {
+  background: #f1f5f9;
+}
+
+/* DISABLED */
+
+.btnRow button:disabled {
+  background: #94a3b8;
+  color: white;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================
+   RESULT SCREEN
+========================= */
+
+.card h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* PASS / FAIL COLORS */
+
+.passText {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.failText {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* =========================
+   CONTINUE / RETAKE BUTTONS
+========================= */
+
+.primary {
+  display: inline-block;
+
+  padding: 12px 18px;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.primary:hover {
+  background: #1d4ed8;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .main {
+    padding: 24px 18px 40px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .btnRow {
+    flex-direction: column;
+  }
+}

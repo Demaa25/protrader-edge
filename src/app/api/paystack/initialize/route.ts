@@ -1,4 +1,5 @@
-//src/app/api/paystack/initialize/route.ts
+// src/app/api/paystack/initialize/route.ts
+
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
@@ -7,142 +8,159 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
 
-    const courseId = searchParams.get("courseId"); // LMS
-    const courseSlug = searchParams.get("course"); // Public
+    const courseId =
+      searchParams.get("courseId");
 
-    let session = null;
-    let userId: string | null = null;
-    let email: string | null = null;
-
-    /**
-     * Only require auth when coming from LMS
-     */
-    if (courseId) {
-      session = await getSession();
-
-      if (!session?.user)
-        return NextResponse.redirect(
-          new URL("/login", req.url)
-        );
-
-      userId = (session.user as any).id as string;
-      email = session.user.email!;
+    if (!courseId) {
+      return NextResponse.json(
+        {
+          error: "Course ID required",
+        },
+        {
+          status: 400,
+        }
+      );
     }
 
-    /**
-     * PUBLIC PURCHASE
-     * no login required
-     */
-    if (!courseId && courseSlug) {
-      email = searchParams.get("email") || undefined as any;
+    const session =
+      await getSession();
+
+    if (!session?.user) {
+      return NextResponse.redirect(
+        new URL("/login", req.url)
+      );
     }
 
-    let course;
+    const userId = (
+      session.user as any
+    ).id as string;
 
-    /**
-     * LMS lookup
-     */
-    if (courseId) {
-      course = await prisma.course.findUnique({
-        where: { id: courseId },
-      });
-    }
+    const email =
+      session.user.email!;
 
-    /**
-     * Public lookup
-     */
-    if (!course && courseSlug) {
-      course = await prisma.course.findFirst({
+    const course =
+      await prisma.course.findUnique({
         where: {
-          title: {
-            contains: courseSlug,
-            mode: "insensitive",
-          },
+          id: courseId,
         },
       });
+
+    if (!course) {
+      return NextResponse.json(
+        {
+          error: "Course not found",
+        },
+        {
+          status: 404,
+        }
+      );
     }
 
-    if (!course)
-      return NextResponse.json(
-        { error: "Course not found" },
-        { status: 404 }
-      );
-
-    const amountKobo = course.priceKobo;
-
-    /**
-     * If LMS -> create purchase
-     */
-    let purchaseId: string | null = null;
-
-    if (userId) {
-      const existing = await prisma.purchase.findUnique({
+    const existing =
+      await prisma.purchase.findUnique({
         where: {
           userId_courseId: {
             userId,
-            courseId: course.id,
+            courseId,
           },
         },
       });
 
-      if (existing?.status === "PAID") {
-        return NextResponse.redirect(
-          new URL(`/courses/${course.id}`, req.url)
-        );
-      }
+    if (
+      existing?.status === "PAID"
+    ) {
+      return NextResponse.redirect(
+        new URL(
+          `/courses/${course.id}`,
+          req.url
+        )
+      );
+    }
 
-      const purchase = await prisma.purchase.create({
-        data: {
-          userId,
-          courseId: course.id,
-          totalKobo: amountKobo,
-          amountKobo: amountKobo,
-          status: "PENDING",
-          planType: "FULL",
-        },
-      });
+    let purchaseId =
+      existing?.id ?? null;
+
+    if (!existing) {
+      const purchase =
+        await prisma.purchase.create({
+          data: {
+            userId,
+            courseId,
+
+            totalKobo:
+              course.priceKobo,
+
+            amountKobo:
+              course.priceKobo,
+
+            status: "PENDING",
+          },
+        });
 
       purchaseId = purchase.id;
     }
 
     const reference = `pte_${Date.now()}`;
 
-    const initRes = await fetch(
-      "https://api.paystack.co/transaction/initialize",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email ?? "guest@protraderedge.com",
-          amount: amountKobo,
-          reference,
-          callback_url: `${process.env.NEXTAUTH_URL}/payment/verify`,
-          metadata: {
-            purchaseId,
-            courseId: course.id,
-            userId,
+    const initRes =
+      await fetch(
+        "https://api.paystack.co/transaction/initialize",
+        {
+          method: "POST",
+
+          headers: {
+            Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+            "Content-Type":
+              "application/json",
           },
-        }),
-      }
-    );
 
-    const data = await initRes.json();
+          body: JSON.stringify({
+            email,
 
-    if (!data.status)
-      return NextResponse.json(
-        { error: "Paystack error", details: data },
-        { status: 500 }
+            amount:
+              course.priceKobo,
+
+            reference,
+
+            callback_url: `${process.env.NEXTAUTH_URL}/payment/verify`,
+
+            metadata: {
+              purchaseId,
+              userId,
+              courseId,
+            },
+          }),
+        }
       );
 
-    return NextResponse.redirect(data.data.authorization_url);
+    const data =
+      await initRes.json();
 
+    if (!data.status) {
+      return NextResponse.json(
+        {
+          error:
+            "Paystack initialization failed",
+
+          details: data,
+        },
+        {
+          status: 500,
+        }
+      );
+    }
+
+    return NextResponse.redirect(
+      data.data.authorization_url
+    );
   } catch (error: any) {
     return NextResponse.json(
-      { error: "Server error", details: error.message },
-      { status: 500 }
+      {
+        error: error.message,
+      },
+      {
+        status: 500,
+      }
     );
   }
 }

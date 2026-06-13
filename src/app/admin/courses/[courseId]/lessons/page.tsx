@@ -1,5 +1,4 @@
 // src/app/admin/courses/[courseId]/lessons/page.tsx
-import styles from "./admin-lessons.module.css";
 import AdminCourseLessonsClient from "./AdminCourseLessonsClient";
 
 type ParamsLike = { courseId: string } | Promise<{ courseId: string }>;
