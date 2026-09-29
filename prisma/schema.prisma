@@ -138,7 +138,6 @@ model Lesson {
   progresses LessonProgress[]
   materials LessonMaterial[]
   evaluations Evaluation[]
-  application Application?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -196,42 +195,6 @@ model LessonMaterial {
   @@index([lessonId])
 }
 
-model Application {
-  id        String @id @default(cuid())
-  lessonId  String @unique
-
-  instruction String?
-  requirements String?
-  scenario     String? @db.Text
-
-  chartImageUrl String?
-
-  focusAreas   String[]   // or JSON
-
-  submissions ApplicationSubmission[]
-
-  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-}
-
-model ApplicationSubmission {
-  id        String @id @default(cuid())
-  applicationId String
-  userId     String
-
-  structure    String?
-  liquidity    String?
-  risk         String?
-  invalidation String?
-  failure      String?
-
-  passed Boolean @default(false)
-  feedback String? @db.Text
-
-  createdAt DateTime @default(now())
-
-  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
-}
-
 model Enrollment {
   id        String   @id @default(cuid())
   userId    String
@@ -284,7 +247,6 @@ model Certificate {
 //
 
 enum BankType {
-  KNOWLEDGE_CHECK
   QUIZ
   CERTIFICATION
 }
@@ -342,7 +304,6 @@ model BankOption {
 
 enum EvaluationType {
   QUIZ // small quiz (after modules)
-  KNOWLEDGE_CHECK // knowledge check (at the end of a lesson)
   CERTIFICATION // certification exam (at the end of a course)
 }
 
